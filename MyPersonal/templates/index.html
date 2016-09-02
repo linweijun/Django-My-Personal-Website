@@ -93,107 +93,78 @@
     <div class="main">
         <div class="container">
             <ul class="breadcrumb">
-                {% block breadcrumb %}
                 <li><a href="#">Home</a></li>
                 <li><a href="#">Blog</a> </li>
                 <li class="active">Blog List</li>
-                {% endblock %}
             </ul>
-            <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR & CONTENT -->
+            <div class="row margin-bottom-48">
+                <!-- BEGIN CONTENT -->
                 <div class="col-md-12 col-sm-12">
-                    <h1>{% block margin %}Blog List {% endblock %}</h1>
                     <div class="content-page">
-                        {% block content %}
                         <div class="row">
-                            <div class="col-md-4 col-sm-4">
-                                <div class="front-carousel">
-                                    <!-- 图片 -->
-                                    <div class="carousel slide" id="myCarousel"><!-- js -->
-                                        <div class="carousel-inner">
-                                            <!-- 图片 -->
-                                            <div class="item">
-                                                <img alt="" src="#">
-                                            </div>
-
-                                        </div>
-                                        <a data-slide="prev" href="#myCarousel" class="carousel-control left">
-                                            <i class="fa fa-angle-left"></i>
-                                        </a>
-                                        <a data-slide="next" href="#myCarousel" class="carousel-control right">
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                        </div>
+                            <div class="col-md-9 col-sm-9 blog-posts">
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <img class="img-responsive" alt="" src=".img">
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <h2><a href="blg.html">Test</a> </h2>
+                                        <ul class="blog-info">
+                                            <li><i class="fa fa-calendar"></i>25/07/2016 </li>
+                                            <li><i class="fa fa-comments"></i>17</li>
+                                            <li><i class="fa fa-tags"></i>UI</li>
+                                        </ul>
+                                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui sint blanditiis prae sentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing condimentum eleifend enim a feugiat.</p>
+                                        <a href="blg.html" class="more">Read more<i class="icon-angle-right"></i> </a>
                                     </div>
                                 </div>
-                            <!-- 文章 -->
-                            <div class="col-md-8 col-sm-8">
-                                <h2><a href="#">title</a></h2><!-- content title -->
-                                <ul class="blog-info">
-                                    <li><i class="fa fa-calculator">time</i> </li><!--time-->
-                                    <li><i class="fa fa-comment">pinglun </i> </li><!--pinglun -->
-                                    <li><i class="fa fa-tags">tags</i> </li><!-- tags-->
+                                <hr class="blog-post-sep">
+                                <ul class="pagination">
+                                    <li><a href="#">Prev</a> </li>
+                                    <li><a href="#">1</a> </li>
+                                    <li><a href="#">Next</a> </li>
                                 </ul>
-                                <p >dsadsadsad</p><!--zhengwen-->
-                                <a href="#" class="more">Read more<i class="icon-angle-right"></i> </a>
                             </div>
-                        </div>
-                        <hr class="blog-post-sep">
-                        {% endblock %}
-                        <ul class="pagination">
-                            <li><a href="#">Rrev</a> </li>
-                            <li><a href="#">1</a> </li>
-                            <li><a href="#">2</a> </li>
-                            <li class="active"><a href="#">3</a> </li>
-                            <li><a href="#">Next</a> </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3 blog-sidebar">
-                        <h2 class="no-top-space">Categorise</h2>
-                        <ul class="nav sidebar-categories margin-bottom-40">
-                            <li><a href="#">sdsad</a> </li><!-- fenlei-->
-                        </ul>
-                        <h2>Recent News</h2>
-                        <div class="recent-news margin-bottom-10">
-                            <div class="row margin-bottom-10">
-                                <div class="col-md-3">
-                                    <img src="#" class="img-responsive" alt="">
-                                </div>
-                                <div class="col-md-9 recent-news-inner">
-                                    <h3><a href="#">dasdsadas</a> </h3>
-                                    <p>sdsadsadasd</p>
-                                </div>
+                            <!-- BEGIN RIGHT -->
+                            <div class="col-md-3 col-sm-3 blog-sidebar">
+                                <h2 class="no-top-space">Categories</h2>
+                                <ul class="nav sidebar-categories margin-bottom-40">
+                                    <li><a href="#">London</a> </li>
+                                </ul>
                             </div>
-                        </div><!--end recent -->
-                        <!-- bianqian -->
-                        <div class="blog-tags margin-bottom-20">
-                            <h2>Tags</h2>
-                            <ul>
-                                <li><a href="#"><i class="fa fa-tags">dada</i> </a> </li>
-                            </ul>
+                            <!-- END RIGHT -->
                         </div>
                     </div>
+                </div>
+                <!-- END CONTENT -->
+            </div>
+            <!-- END SIDEBAR & CONTENT -->
+            </div>
+        </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 padding-top-10">
+                    2016 © Remodel <a href="www.metronic.com"> Metronic</a> Shop UI
+                </div>
+               <div class="col-md-6 col-sm-6">
+                   <ul class="social-footer list-unstyled list-inline pull-right">
+                      <li><a href="javascript:;"><i class="fa fa-facebook"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-google-plus"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-dribbble"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-linkedin"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-skype"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-github"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-youtube"></i></a></li>
+                      <li><a href="javascript:;"><i class="fa fa-dropbox"></i></a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
-<div class="footer">
-      <div class="container">
-        <div class="row">
-          <!-- BEGIN COPYRIGHT -->
-          <div class="col-md-6 col-sm-6 padding-top-10">
-            2014 © Metronic Shop UI. ALL Rights Reserved. <a href="javascript:;">Privacy Policy</a> | <a href="javascript:;">Terms of Service</a>
-          </div>
-          <!-- END COPYRIGHT -->
-          <!-- BEGIN PAYMENTS -->
-          <div class="col-md-6 col-sm-6">
-            <ul class="social-footer list-unstyled list-inline pull-right">
-              <li><a href="javascript:;"><i class="fa fa-github"></i></a></li>
-            </ul>
-          </div>
-          <!-- END PAYMENTS -->
-        </div>
-      </div>
-    </div>
+
     <script src="{% static 'js/jquery-3.1.0.js'%}" type="text/javascript"></script>
     <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
     <script src="{% static  'js/bootstrap.min.js' %}" type="text/javascript"></script>
