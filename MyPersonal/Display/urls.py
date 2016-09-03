@@ -5,5 +5,5 @@ from .views import index, show_Article_content
 
 urlpatterns = [
     url(r'^$', index,name='index'),
-    url(r'^a/', show_Article_content, name='a')
+    url(r'^a/(\d{4})?$', show_Article_content, name='a')
 ]
