@@ -1,9 +1,9 @@
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import index
+from .views import index, show_Article_content
 
 urlpatterns = [
     url(r'^$', index,name='index'),
-] + static(settings.STATIC_URL,
-    document_root = settings.STATIC_ROOT)
+    url(r'^a/', show_Article_content, name='a')
+]

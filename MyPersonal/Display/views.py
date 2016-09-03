@@ -5,3 +5,6 @@ from django.http import HttpResponse
 
 def index(request):
     return render(request, "index.html")
+
+def show_Article_content(request):
+    return render(request, "blog_item.html")
