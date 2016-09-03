@@ -27,19 +27,23 @@
                                 <h1>Sign up</h1>
                                 <p>
                                     {% csrf_token %}
-                                    <label for="username" class="uname" data-icon="u" > Your username </label>
-                                    <input id="username" name="username" required="required" type="text" placeholder="myusername"/>
+                                    <label for="username" class="uname" data-icon="u">Your username</label>
+                                    <input id="username" name="username" required="required" type="text" placeholder="mysuperusername690" />
                                 </p>
                                 <p>
-                                    <label for="password" class="youpasswd" data-icon="p"> Your password </label>
-                                    <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" />
+                                    <label for="email" class="youmail" data-icon="e" > Your email</label>
+                                    <input id="email" name="email" required="required" type="email" placeholder="mysupermail@mail.com"/>
                                 </p>
-                                <p class="keeplogin">
-									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
-									<label for="loginkeeping">Keep me logged in</label>
-								</p>
-                                <p class="login button">
-                                    <input type="submit" value="Sign up" />
+                                <p>
+                                    <label for="password" class="youpasswd" data-icon="p">Your password </label>
+                                    <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                </p>
+                                <p>
+                                    <label for="password_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
+                                    <input id="password_confirm" name="password_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                </p>
+                                <p class="signin button">
+									<input type="submit" value="Sign up"/>
 								</p>
                                 <p class="change_link">
 									Already a member ?

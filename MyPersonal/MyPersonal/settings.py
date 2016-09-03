@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Display',
+    'Account',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -141,3 +142,8 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher' ,
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher' ,
 ]
+
+#Auth
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+    )
