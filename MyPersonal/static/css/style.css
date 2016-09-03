@@ -1508,6 +1508,11 @@ Pre-Footer and pre-footer elements
   opacity: 1;
 }
 
+.fa-github{
+	color: #0c91e5;
+	font-size:17px;
+}
+
 .pre-footer hr {
 	margin-top: 0;
 	border-color: #404040;

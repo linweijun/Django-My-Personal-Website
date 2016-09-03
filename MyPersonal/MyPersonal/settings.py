@@ -54,7 +54,7 @@ ROOT_URLCONF = 'MyPersonal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/account')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,6 +129,7 @@ STATICFILES_DIRS = (
     ("js", os.path.join(STATIC_ROOT,'js')),
     ("fonts", os.path.join(STATIC_ROOT,'fonts')),
     ("img", os.path.join(STATIC_ROOT, 'img')),
+    ("account", os.path.join(STATIC_ROOT, 'account')),
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

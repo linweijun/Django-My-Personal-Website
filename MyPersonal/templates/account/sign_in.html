@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6 lt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7 lt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8 lt8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="zh" class="no-js"> <!--<![endif]-->
+<head>
+    <title>Sigo in</title>
+    {% load static %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="{% static 'css/toastr.css' %}">
+        <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="{% static 'account/css/style.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'account/css/animate-custom.css' %}" />
+
+</head>
+<body>
+        <div class="container">
+            <section>
+                <div id="main" >
+                    <div id="wrapper">
+
+                            <form  id="form_login" >
+                                <h1>Logo in</h1>
+                                <p>
+                                    {% csrf_token %}
+                                    <label for="username" class="uname" data-icon="u" > Your username </label>
+                                    <input id="username" name="username" required="required" type="text" placeholder="myusername"/>
+                                </p>
+                                <p>
+                                    <label for="password" class="youpasswd" data-icon="p"> Your password </label>
+                                    <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO" />
+                                </p>
+                                <p class="keeplogin">
+									<input type="checkbox" name="loginkeeping" id="loginkeeping" value="loginkeeping" />
+									<label for="loginkeeping">Keep me logged in</label>
+								</p>
+                                <p class="login button">
+                                    <input type="submit" value="Login" />
+								</p>
+                                <p class="change_link">
+									Not a member yet ?
+									<a href="{% url 'register' %}" class="to_register">Join us</a>
+								</p>
+                            </form>
+
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+    <script src="{% static 'js/mian.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/toastr.min.js' %}"></script>
+</html>
