@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.models import User
 from django.http import JsonResponse
-
+from django.contrib.auth.hashers import make_password
 # Create your views here.
 def login_views(request):
     if request.method == 'POST':
@@ -28,5 +28,18 @@ def register(request):
         password_confirm = request.POST['password_confirm']
         email = request.POST['email']
 
-        
+        if password == password_confirm:
+            username_status = User.objects.filter(username=username)
+            if username_status:
+                return JsonResponse({'status':'error','message':'用户名已经存在'})
+            else:
+                try:
+                    User.objects.create(username=username,email=email,password=make_password(password_confirm))
+                except:
+                    pass
+                return JsonResponse({'status':'success', 'message':'用户创建成功'})
+        else:
+            return JsonResponse({'status':'error', 'message':'两次密码不一致'})
+
+
     return render(request, "sign_up.html")

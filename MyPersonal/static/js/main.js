@@ -1,4 +1,4 @@
-toastr.options.positionClass = 'toast-top-right';
+
 
 //get CRSF
 function getCookie(name) {
@@ -23,6 +23,7 @@ function LocalDate() {
 
 }
 $(document).ready(function() {
+    toastr.options.positionClass = 'toast-top-right';
     //Login
     $(this).on('submit', '#form_login', function (e) {
         e.preventDefault();
@@ -37,10 +38,9 @@ $(document).ready(function() {
             cache: false,
 
             success: function (json) {
-                var resulr = json.url;
                 if (json.status == 'success') {
                     toastr.success(json.message);
-                    setTimeout("location.href= resulr ", 3000);
+                    setTimeout(location.href= json.url, 3000);
                 } else {
                     toastr.error(json.message)
                 }
@@ -51,24 +51,27 @@ $(document).ready(function() {
     //Register
     $(this).on('submit', '#form_register', function (e) {
         e.preventDefault();
-
         $.ajax({
-            type: 'POST',
+            type: "POST",
             url: '',
             data: {
-                username: $('#username').val(), password: $('#password').val(),
-                passowrd_confirm: $('#password_confirm').val(), email: $('#email').val()
+               username:$('#username').val(),password:$('#password').val(),
+               password_confirm:$('#password_confirm').val(),
+                email:$('#email').val(),
+                csrfmiddlewaretoken: getCookie('csrftoken')
             },
             cache: false,
+
             success: function (json) {
                 var resulr = json.url;
                 if (json.status == 'success') {
                     toastr.success(json.message);
-                    setTimeout("location.href= resulr", 3000);
                 } else {
-                    toastr.error(json.message);
+                    toastr.error(json.message)
                 }
             }
         })
+
     });
+
 });
