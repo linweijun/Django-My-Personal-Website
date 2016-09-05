@@ -43,3 +43,6 @@ def register(request):
 
 
     return render(request, "sign_up.html")
+
+def Management(request):
+    return render(request, "account_base.html")
