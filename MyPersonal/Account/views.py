@@ -47,3 +47,7 @@ def register(request):
 @login_required
 def Management(request):
     return render(request, "account_base.html")
+
+
+def Article_new(request):
+    return render(request, "article_new.html")
