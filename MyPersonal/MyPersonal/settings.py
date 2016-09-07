@@ -23,8 +23,7 @@ SECRET_KEY = 'b6+5!=+%qs048nn*kxuk0w9f27ux__422j-53+gc_t=jadk8q@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -55,7 +54,8 @@ ROOT_URLCONF = 'MyPersonal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/account')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/account'),
+                 os.path.join(BASE_DIR, 'templates/error')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,16 +122,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-SITE_ROOT = os.path.join(os.path.abspath(os.path.dirname(__file__)),'..')
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(SITE_ROOT,'static')
-STATICFILES_DIRS = (
-    ("css", os.path.join(STATIC_ROOT, 'css')),
-    ("js", os.path.join(STATIC_ROOT,'js')),
-    ("fonts", os.path.join(STATIC_ROOT,'fonts')),
-    ("img", os.path.join(STATIC_ROOT, 'img')),
-    ("account", os.path.join(STATIC_ROOT, 'account')),
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -146,4 +140,7 @@ PASSWORD_HASHERS = [
 #Auth
 AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
-    )
+)
+
+#
+LOGIN_URL = '/account/login/'

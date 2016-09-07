@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 # Create your views here.
@@ -43,6 +44,6 @@ def register(request):
 
 
     return render(request, "sign_up.html")
-
+@login_required
 def Management(request):
     return render(request, "account_base.html")

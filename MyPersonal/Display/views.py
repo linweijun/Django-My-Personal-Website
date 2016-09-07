@@ -7,4 +7,5 @@ def index(request):
     return render(request, "index.html")
 
 def show_Article_content(request,id):
-    return render(request, "blog_item.html")
+    return HttpResponse(id);
+    #return render(request, "blog_item.html")
