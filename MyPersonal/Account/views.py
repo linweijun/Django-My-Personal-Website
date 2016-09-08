@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
+import time
+from Article.models import Article
 # Create your views here.
 def login_views(request):
     if request.method == 'POST':
@@ -50,4 +52,19 @@ def Management(request):
 
 
 def Article_new(request):
+    if request.method == 'POST':
+        userid = request.user.id
+        title = request.POST['title']
+        content = request.POST['content']
+        tags = request.POST['tags']
+        classic = request.POST['classic']
+        date = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+        try:
+            status = Article.objects.create(title=title, content=content,
+                                   tags=tags,publish_date=date,
+                                   readcount=0,author_id=userid,classic_id=1)
+            if status:
+                return JsonResponse({'status':'success', 'message':'文章保存成功'})
+        except :
+                return JsonResponse({'status':'error', 'message':'数据库君拒收～！请在检查检查！～'})
     return render(request, "article_new.html")

@@ -17,11 +17,6 @@ function getCookie(name) {
         return cookieValue;
      }
 //Get Times
-function LocalDate() {
-    var dates = new Date();
-    return dates.toLocaleString()
-
-}
 $(document).ready(function() {
     toastr.options.positionClass = 'toast-top-right';
     //Login
@@ -74,7 +69,30 @@ $(document).ready(function() {
 
     });
 
-    // Article
+    // Article_CREATE
+    $(this).on('submit', '#form_article', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type:'POST',
+            url:'',
+            data:{
+                csrfmiddlewaretoken: getCookie('csrftoken'),
+                title:$('#title').val(),
+                content:$('#content').val(),
+                tags:$('#tags').val(),
+                classic:$('#classic').val()
+            },
+
+            success:function (json) {
+                if (json.status == 'success'){
+                    toastr.success(json.message)
+                }else{
+                    toastr.error(json.message)
+                }
+            }
+        })
+    })
 
 
 });
