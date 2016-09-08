@@ -33,9 +33,17 @@ $(document).ready(function() {
             cache: false,
 
             success: function (json) {
+                var rebackurl;
+                var url = window.location.search;
+                if (url){
+                    rebackurl = url.slice(15);
+                }else {
+                    rebackurl = json.url;
+                }
                 if (json.status == 'success') {
                     toastr.success(json.message);
-                    setTimeout(location.href= json.url, 3000);
+                    setTimeout(location.href= rebackurl, 3000);
+
                 } else {
                     toastr.error(json.message)
                 }

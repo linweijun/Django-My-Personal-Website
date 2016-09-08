@@ -1,137 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends "account_base.html" %}
 
-    <title>Management </title>
-    {% load static %}
-       <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
+{% block title %} Create New Article | Next Day {% endblock %}
+{% block nav %}
+    <li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span> </a>
+        <ul class="nav child_menu">
+            <li><a href="account_base.html">personal information</a> </li><!--个人资料-->
+            <li><a href="account_base.html">notice</a> </li><!--通知-->
+        </ul>
+    </li>
+    <li><a><i class="fa fa-edit"></i>Article<span class="fa fa-chevron-down"></span></a><!-- 文章-->
+        <ul class="nav child_menu">
+            <li><a href="">New Article</a></li>
+            <li><a href="articles_management.html">Management Articles</a></li>
+        </ul>
+    </li>
+    <li><a><i class="fa fa-comment"></i>Comment<span class="fa fa-chevron-down"></span> </a>
+        <ul class="nav child_menu">
+            <li><a href="comment.html">Comment</a> </li>
+        </ul>
+    </li>
+{% endblock %}
 
-        <link rel="stylesheet" href="{% static 'css/toastr.css' %}">
-        <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" />
-        <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
-        <link rel="stylesheet" type="text/css" href="{% static 'account/css/style.css' %}" />
-		<link rel="stylesheet" type="text/css" href="{% static 'account/css/animate-custom.css' %}" />
-
-    <!-- Bootstrap -->
-    <link href="{% static 'account/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{% static 'account/gentelella/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{% static 'account/gentelella/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
-        <link href="{% static 'account/css/bootstrap-markdown.min.css' %}" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="{% static 'account/css/custom.min.css' %}" rel="stylesheet">
-  </head>
-
-<body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
-        <div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-rocket"></i> <span>Netx Day</span></a>
-            </div>
-                    <!-- menu profile quick info -->
-            <div class="clearfix"></div>
-            <div class="profile">
-                <div class="profile_pic">
-                    <img src="{% static 'account/images/img.jpg'%}" alt="..." class="img-circle profile_img">
-                </div>
-                <div class="profile_info">
-                    <span>Welcome,</span>
-                    <h2>LinkBG</h2>
-                </div>
-            </div>
-                    <!-- end menu profile quick info -->
-            <br />
-                    <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                <div class="menu_section">
-                <h3>General</h3>
-                    <ul class="nav side-menu">
-                        <li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span> </a>
-                            <ul class="nav child_menu">
-                                <li><a href="ah">personal information</a> </li><!--个人资料-->
-                                <li><a href="a">notice</a> </li><!--通知-->
-                            </ul>
-                        </li>
-                        <li><a><i class="fa fa-edit"></i>Article<span class="fa fa-chevron-down">
-                            </span></a><!-- 文章-->
-                            <ul class="nav child_menu">
-                                <li><a href="#">New Article</a></li>
-                                <li><a href="articles_management.html">Management Articles</a></li>
-                            </ul>
-                        </li>
-                        <li><a><i class="fa fa-comment"></i>Comment<span class="fa fa-chevron-down"></span> </a>
-                            <ul class="nav child_menu">
-                                <li><a href="comment.html">Comment</a> </li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-          </div>
-        </div>
-         <!--end -->
-        <!-- top nav -->
-        <div class="top_nav">
-            <div class="nav_menu">
-                <nav>
-                    <div class="nav toggle">
-                        <a id="menu_toggle"><i class="fa fa-bars"></i> </a>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
-                                 aria-expanded="false">
-                                <img src="{% static 'account/images/img.jpg'%}" alt="">LinkBG
-                                <span class="fa fa-angle-down"></span>
-                            </a>
-                            <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">Log Out</a> </li>
-                            </ul>
-                        </li>
-                        <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
-                               aria-expanded="false">
-                                <i class="fa fa-envelope-o"></i>
-                                <span class="badge bg-green"></span>
-                            </a>
-                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                <li>
-                                    <a>
-                                        <span>
-                                            <span>LinkBG</span>
-                                            <span class="time">3 mins ago</span>
-                                        </span>
-                                        <span class="message">
-                                            heheheheeheeheeh
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="text-conter">
-                                        <a>
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        <!-- end nav-->
-      <!-- page content -->
-        <div class="right_col" role="main">
-
+{% block main %}
             <form id="form_article">
                     <input name="title" class="form-control" id="title" type="text" placeholder="Title?" required="required"/>
                 <hr />
@@ -149,26 +39,15 @@
                     <button type="submit" class="btn">Submit</button>
 
               </form>
-        </div>
+{% endblock %}
 
-
-          <!-- footer content -->
-        <footer>
-          <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
-          </div>
-          <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
-
-        </div>
-    </div>
-
-
+{% block script %}
+    {% load static %}
     <script src="{% static 'js/jquery-3.1.0.js'%}" type="text/javascript"></script>
     <script src="{% static  'js/bootstrap.min.js' %}" type="text/javascript"></script>
     <script src="{% static 'js/toastr.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="{% static 'account/js/custom.min.js' %}"></script>
     <script src="{% static 'account/js/bootstrap-markdown.js' %}"></script>
@@ -176,9 +55,4 @@
         <script>
             $("#content").markdown({autofocus:false,savable:false})
         </script>
-
-
-
-
-  </body>
-</html>
+{% endblock %}

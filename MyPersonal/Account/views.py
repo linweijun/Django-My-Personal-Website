@@ -8,6 +8,11 @@ from django.contrib.auth.hashers import make_password
 import time
 from Article.models import Article
 # Create your views here.
+
+
+def logout_views(request):
+    logout(request)
+
 def login_views(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -50,7 +55,7 @@ def register(request):
 def Management(request):
     return render(request, "account_base.html")
 
-
+@login_required
 def Article_new(request):
     if request.method == 'POST':
         userid = request.user.id

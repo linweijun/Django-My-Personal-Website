@@ -144,4 +144,5 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #
-LOGIN_URL = '/account/login/'
+LOGIN_URL = '/account'
+REDIRECT_FIELD_NAME = 'to'
