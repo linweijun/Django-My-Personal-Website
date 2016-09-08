@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^login',login_views, name='login'),
     url(r'^logout$',logout_views, name='logout'),
     url(r'^register', register, name='register'),
-    url(r'^user',Management, name='user'),
+    url(r'^user/([\w]+)$',Management, name='user'),
     url(r'^new_Article', Article_new, name='new'),
 ]

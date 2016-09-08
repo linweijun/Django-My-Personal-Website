@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -14,20 +15,23 @@ def logout_views(request):
     logout(request)
 
 def login_views(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+    if request.user.is_authenticated:
+        return HttpResponseRedirect("/account/user/das",'test')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-        user_status =authenticate(username=username, password=password)
-        if user_status:
-            login(request, user_status)
-            return JsonResponse({'status':'success','message':'登入成功','url':'/'})
-        else:
-            if User.objects.filter(username=username):
-                return JsonResponse({'status':'error', 'message':'密码错误'})
+            user_status =authenticate(username=username, password=password)
+            if user_status:
+                login(request, user_status)
+                return JsonResponse({'status':'success','message':'登入成功','url':'/'})
             else:
-                return JsonResponse({'status':'error','message':'用户不存在'})
-    return render(request, "sign_in.html")
+                if User.objects.filter(username=username):
+                    return JsonResponse({'status':'error', 'message':'密码错误'})
+                else:
+                    return JsonResponse({'status':'error','message':'用户不存在'})
+        return render(request, "sign_in.html")
 
 def register(request):
     if request.method == 'POST':
@@ -52,8 +56,9 @@ def register(request):
 
     return render(request, "sign_up.html")
 @login_required
-def Management(request):
-    return render(request, "account_base.html")
+def Management(request,id):
+    #return render(request, "account_base.html")
+    return HttpResponse(id);
 
 @login_required
 def Article_new(request):
