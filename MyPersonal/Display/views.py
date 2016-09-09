@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from Article.models import Article, A_Classics
 import time
 
 # Create your views here.

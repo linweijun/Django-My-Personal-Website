@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, logout,login
+from django.contrib.auth.views import login
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
@@ -16,7 +17,10 @@ def logout_views(request):
 
 def login_views(request):
     if request.user.is_authenticated:
-        return HttpResponseRedirect("/account/user/das",'test')
+        username = request.user.username
+        url = "/account/user/" + username
+        return HttpResponseRedirect(url)
+
     else:
         if request.method == 'POST':
             username = request.POST['username']
@@ -24,7 +28,8 @@ def login_views(request):
 
             user_status =authenticate(username=username, password=password)
             if user_status:
-                login(request, user_status)
+                login(request, '')
+                login(request,user_status)
                 return JsonResponse({'status':'success','message':'登入成功','url':'/'})
             else:
                 if User.objects.filter(username=username):
@@ -57,8 +62,9 @@ def register(request):
     return render(request, "sign_up.html")
 @login_required
 def Management(request,id):
-    #return render(request, "account_base.html")
-    return HttpResponse(id);
+    content = User.objects.get(username = id)
+
+    return render(request, "account_base.html", {'content':content})
 
 @login_required
 def Article_new(request):
