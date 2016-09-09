@@ -74,13 +74,15 @@ def Article_new(request):
         content = request.POST['content']
         tags = request.POST['tags']
         classic = request.POST['classic']
+        slug = request.POST['slug']
         date = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
         try:
             status = Article.objects.create(title=title, content=content,
                                    tags=tags,publish_date=date,
-                                   readcount=0,author_id=userid,classic_id=1)
+                                   readcount=0,author_id=userid,classic_id=1,slug=slug)
             if status:
                 return JsonResponse({'status':'success', 'message':'文章保存成功'})
-        except :
-                return JsonResponse({'status':'error', 'message':'数据库君拒收～！请在检查检查！～'})
+        except EOFError ,e :
+            return JsonResponse({'status':'error', 'message':'数据库君拒收～！请在检查检查！～'})
+
     return render(request, "article_new.html")

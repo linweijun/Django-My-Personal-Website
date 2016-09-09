@@ -25,6 +25,7 @@
     <meta property="og:url" content="-CUSTOMER VALUE-">
 
     {% load static %}
+    {% load makrdown_filter %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
@@ -104,22 +105,28 @@
                     <div class="content-page">
                         <div class="row">
                             <div class="col-md-9 col-sm-9 blog-posts">
+                                {% for blog in ArticleList %}
+
                                 <div class="row">
+
                                     <div class="col-md-4 col-sm-4">
                                         <img class="img-responsive" alt="" src="{% static 'img/default.jpg'%}">
                                     </div>
                                     <div class="col-md-8 col-sm-8">
-                                        <h2><a href="blg.html">Test</a> </h2>
+                                        <h2><a href="{% url 'Display:a' blog.slug %}">{{ blog.title }}</a> </h2>
                                         <ul class="blog-info">
-                                            <li><i class="fa fa-calendar"></i>25/07/2016 </li>
-                                            <li><i class="fa fa-comments"></i>17</li>
-                                            <li><i class="fa fa-tags"></i>UI</li>
+                                            <li><i class="fa fa-calendar"></i>{{ blog.publish_date }}</li>
+                                            <li><i class="fa fa-comments"></i>{{ blog.readcount }}</li>
+                                            <li><i class="fa fa-tags"></i>{{ blog.tags }}</li>
                                         </ul>
-                                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui sint blanditiis prae sentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non eleifend enim a feugiat. Pellentesque viverra vehicula sem ut volutpat. Lorem ipsum dolor sit amet, consectetur adipiscing condimentum eleifend enim a feugiat.</p>
+                                        <p>{{ blog.content | markdown_p}}</p>
                                         <a href="blg.html" class="more">Read more<i class="icon-angle-right"></i> </a>
                                     </div>
+
                                 </div>
+
                                 <hr class="blog-post-sep">
+                                {% endfor %}
                                 <ul class="pagination">
                                     <li><a href="#">Prev</a> </li>
                                     <li><a href="#">1</a> </li>
@@ -130,8 +137,9 @@
                             <div class="col-md-3 col-sm-3 blog-sidebar" >
                                 <h2 class="no-top-space">Categories</h2>
                                 <ul class="nav sidebar-categories margin-bottom-40">
-                                    <li><a href="#">London</a> </li>
-                                    <li><i class="fa fa-github" ></i> </li>
+                                    {% for list in Categories %}
+                                    <li><a href="#">{{ list.name }}</a> </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <!-- END RIGHT -->

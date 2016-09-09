@@ -89,7 +89,8 @@ $(document).ready(function() {
                 title:$('#title').val(),
                 content:$('#content').val(),
                 tags:$('#tags').val(),
-                classic:$('#classic').val()
+                classic:$('#classic').val(),
+                slug:$('#slug').val()
             },
 
             success:function (json) {
@@ -100,7 +101,9 @@ $(document).ready(function() {
                 }
             }
         })
-    })
+    });
+
+    //fields validate
 
 
 });

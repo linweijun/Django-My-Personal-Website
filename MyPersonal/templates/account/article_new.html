@@ -36,6 +36,10 @@
                       <option>Django</option>
                       <option>服务器</option>
                     </select>
+                <hr />
+                    <input id="slug" class="form-control" placeholder="slug" required="required">
+                    <div id="message" ></div>
+                <h1></h1>
                     <button type="submit" class="btn">Submit</button>
 
               </form>
@@ -52,7 +56,28 @@
     <script src="{% static 'account/js/custom.min.js' %}"></script>
     <script src="{% static 'account/js/bootstrap-markdown.js' %}"></script>
     <script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js"></script>
-        <script>
+    <script>
             $("#content").markdown({autofocus:false,savable:false})
-        </script>
+
+        $('#slug').blur(function (e) {
+            e.preventDefault();
+            var slug = $('#slug').val()
+            if (slug > 0){
+                $.ajax({
+                type:'POST',
+                url:'/yanzhen',
+                data:{
+                    csrfmiddlewaretoken: getCookie('csrftoken'),
+                    slug:slug
+                },
+                success:function (json) {
+                  if (json != 'succcess'){
+                        toastr.error('ss')
+                  }
+                }
+            });
+            }
+
+        })
+    </script>
 {% endblock %}
