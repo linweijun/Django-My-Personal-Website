@@ -14,5 +14,12 @@ def index(request):
 
 def show_Ariticle_Deta(request, slug):
     Article_Deta = Article.objects.get(slug=slug)
+    count = Article_Deta.readcount
+    count += 1
+    try:
+        Article_Deta.readcount = count
+        Article_Deta.save()
+    except:
+        pass
     author = Article_Deta.author.username
     return render(request, 'blog_item.html', {'Article_Deta':Article_Deta, 'author':author})
