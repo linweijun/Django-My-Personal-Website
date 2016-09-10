@@ -8,7 +8,7 @@
 <!-- Head BEGIN -->
 <head>
     <meta charset="utf-8">
-    <title>Home | Personal Website</title>
+    <title>{% block title %}Home{% endblock %} | Next Day</title>
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -49,8 +49,8 @@
 
             <div class="header-navigation pull-right font-transform-inherit">
                 <ul>
-                    <li><a href="#">Home</a> </li>
-                    <li><a href="#">Blog</a> </li>
+                    <li><a href="{% url 'Display:index' %}">Home</a> </li>
+                    <li><a href="{% url 'Display:index' %}">Blog</a> </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown"
                            data-target="#" href="javascript:;">
@@ -78,11 +78,11 @@
                     </li>
                     <!-- 登陆 -->
                     {% if user.username == Node or user.username == '' %}
-                    <li><a href="#">Log In</a></li>
-                    <li><a href="#">Registration</a></li>
+                    <li><a href="{% url 'Account:login' %}">Log In</a></li>
+                    <li><a href="{% url 'Account:registration' %}">Registration</a></li>
                     {% else %}
                     <li>
-                        <a href="{% url 'Account:login' %}">Welcome  {{ user.username }}</a>
+                        <a href="{% url 'Account:user' user.username %}">Welcome  {{ user.username }}</a>
                     </li>
                     {% endif %}
                 </ul>
@@ -94,10 +94,11 @@
     <div class="main">
         <div class="container">
             <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Blog</a> </li>
-                <li class="active">Blog List</li>
+                <li><a href="{% url 'Display:index' %}">Home</a></li>
+                <li><a href="{% url 'Display:index' %}">Blog</a> </li>
+                <li class="active">{% block active %}Blog List {% endblock %}</li>
             </ul>
+            {% block blog_content %}
             <!-- BEGIN SIDEBAR & CONTENT -->
             <div class="row margin-bottom-48">
                 <!-- BEGIN CONTENT -->
@@ -149,6 +150,7 @@
                 <!-- END CONTENT -->
             </div>
             <!-- END SIDEBAR & CONTENT -->
+            {% endblock %}
             </div>
         </div>
     <div class="footer">

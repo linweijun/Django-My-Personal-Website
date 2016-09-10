@@ -13,6 +13,7 @@ def index(request):
     return render(request, 'index.html',{'ArticleList':ArticleList, 'Categories':Categories})
 
 def show_Ariticle_Deta(request, slug):
+    Categories = A_Classics.objects.all()
     Article_Deta = Article.objects.get(slug=slug)
     count = Article_Deta.readcount
     count += 1
@@ -22,4 +23,4 @@ def show_Ariticle_Deta(request, slug):
     except:
         pass
     author = Article_Deta.author.username
-    return render(request, 'blog_item.html', {'Article_Deta':Article_Deta, 'author':author})
+    return render(request, 'blog_item.html', {'Article_Deta':Article_Deta, 'author':author,'Categories':Categories})

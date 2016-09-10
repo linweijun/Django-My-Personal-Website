@@ -13,7 +13,7 @@ class A_Classics(models.Model):
     def __str__(self):
         return self.name
 
-@python_2_unicode_compatible
+
 class Article(models.Model):
     title = models.CharField(max_length=100, unique=True,verbose_name='标题')
     content = models.TextField(verbose_name='正文')
@@ -25,8 +25,11 @@ class Article(models.Model):
     slug = models.SlugField(unique=True)
 
 
-    def __str__(self):
-        return self.content
+    def __repr__(self):
+        p = []
+        p.append(self.readcount)
+        p.append(self.content)
+        return p
 
 @python_2_unicode_compatible
 class Comment(models.Model):
