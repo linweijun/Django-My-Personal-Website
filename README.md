@@ -5,6 +5,9 @@
 > 简易个人博客。基本的增删改查的实现。
 
 ##### 使用的技术
-> 前端：[Bootstrap3](http://getbootstrap.com/) + [Toastr](http://codeseven.github.io/toastr/)+[jQuery](https://jquery.com/) + [gentelella](https://github.com/puikinsh/gentelella)+[metronic](https://github.com/mikesmayer/metronic)+[bootstrap-markdown](https://github.com/toopay/bootstrap-markdown)
+> 前端：[Bootstrap3](http://getbootstrap.com/) + [Toastr](http://codeseven.github.io/toastr/)+[jQuery](https://jquery.com/) + [Gentelella](https://github.com/puikinsh/gentelella)+[Metronic](https://github.com/mikesmayer/metronic)+[Bootstrap-markdown](https://github.com/toopay/bootstrap-markdown)
 
 > 后端：Django
+
+##### 已知小问题
+> Bootstrap-markdown 预览模式无效
