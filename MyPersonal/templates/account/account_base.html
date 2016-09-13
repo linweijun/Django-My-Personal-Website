@@ -48,8 +48,8 @@
                         {% block nav %}
                         <li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span> </a>
                             <ul class="nav child_menu">
-                                <li><a href="ah">personal information</a> </li><!--个人资料-->
-                                <li><a href="#">notice</a> </li><!--通知-->
+                                <li><a href="#">personal information</a> </li><!--个人资料-->
+                                <li><a href="dsa">notice</a> </li><!--通知-->
                             </ul>
                         </li>
                         <li><a><i class="fa fa-edit"></i>Article<span class="fa fa-chevron-down">
@@ -125,11 +125,20 @@
       <!-- page content -->
         <div class="right_col" role="main">
             {% block main %}
-                {{ content.username }}
+                {{ content.name }}
                 <hr/>
-                {{ content.email }}
+                {{ content.age }}
+            <hr />
+            {{ content.b_day }}
+            <hr />
+            {{ content.dec }}
+            <hr />
+                {{userid}}
             {% endblock %}
+
+            
         </div>
+
 
 
           <!-- footer content -->

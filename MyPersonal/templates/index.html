@@ -79,7 +79,7 @@
                     <!-- 登陆 -->
                     {% if user.username == Node or user.username == '' %}
                     <li><a href="{% url 'Account:login' %}">Log In</a></li>
-                    <li><a href="{% url 'Account:registration' %}">Registration</a></li>
+                    <li><a href="{% url 'Account:register' %}">Registration</a></li>
                     {% else %}
                     <li>
                         <a href="{% url 'Account:user' user.username %}">Welcome  {{ user.username }}</a>
@@ -121,7 +121,7 @@
                                             <li><i class="fa fa-tags"></i>{{ blog.tags }}</li>
                                         </ul>
                                         <p>{{ blog.content | markdown_p}}</p>
-                                        <a href="blg.html" class="more">Read more<i class="icon-angle-right"></i> </a>
+                                        <a href="{% url 'Display:a' blog.slug %}" class="more">Read more<i class="icon-angle-right"></i> </a>
                                     </div>
 
                                 </div>

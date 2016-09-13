@@ -9,7 +9,7 @@ import time
 
 def index(request):
     Categories = A_Classics.objects.all()
-    ArticleList = Article.objects.all()
+    ArticleList = Article.objects.all().order_by('-publish_date')
     return render(request, 'index.html',{'ArticleList':ArticleList, 'Categories':Categories})
 
 def show_Ariticle_Deta(request, slug):

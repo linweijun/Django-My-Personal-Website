@@ -1,6 +1,5 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
@@ -9,6 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 import time
 from Article.models import Article
+from .models import dec_info
 # Create your views here.
 
 
@@ -62,9 +62,12 @@ def register(request):
     return render(request, "sign_up.html")
 @login_required
 def Management(request,id):
-    content = User.objects.get(username = id)
-
-    return render(request, "account_base.html", {'content':content})
+    try:
+        userid = request.user.id
+        content = dec_info.objects.get(userId_id=userid)
+        return render(request, "account_base.html", {'content':content, 'userid':userid})
+    except:
+        pass
 
 @login_required
 def Article_new(request):
@@ -82,7 +85,7 @@ def Article_new(request):
                                    readcount=0,author_id=userid,classic_id=1,slug=slug)
             if status:
                 return JsonResponse({'status':'success', 'message':'文章保存成功'})
-        except EOFError ,e :
+        except :
             return JsonResponse({'status':'error', 'message':'数据库君拒收～！请在检查检查！～'})
 
     return render(request, "article_new.html")
