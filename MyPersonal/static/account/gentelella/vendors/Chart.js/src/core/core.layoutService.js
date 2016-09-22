@@ -272,7 +272,7 @@ module.exports = function(Chart) {
 
 			helpers.each(leftBoxes.concat(topBoxes), placeBox);
 
-			// Account for chart width and height
+			// admin for chart width and height
 			left += maxChartAreaWidth;
 			top += maxChartAreaHeight;
 

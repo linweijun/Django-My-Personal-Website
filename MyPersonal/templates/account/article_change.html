@@ -1,0 +1,25 @@
+{% extends "account_base.html" %}
+
+{% block title%}Article Edit | Next Day {% endblock %}
+
+{% block nav %}
+    <li><a><i class="fa fa-home"></i>Home<span class="fa fa-chevron-down"></span> </a>
+        <ul class="nav child_menu">
+            <li><a href="{% url 'Account:login'%}">personal information</a> </li><!--个人资料-->
+            <li><a href="dsa">notice</a> </li><!--通知-->
+        </ul>
+    </li>
+    <li><a><i class="fa fa-edit"></i>Article<span class="fa fa-chevron-down"></span></a><!-- 文章-->
+        <ul class="nav child_menu">
+            <li><a href="{% url 'Account:new_Article' %}">New Article</a></li>
+            <li><a href="articles_management.html">Management Articles</a></li>
+            <li><a href="asd">Article List</a> </li>
+            <li><a href="#">edit</a></li>
+        </ul>
+    </li>
+    <li><a><i class="fa fa-comment"></i>Comment<span class="fa fa-chevron-down"></span> </a>
+        <ul class="nav child_menu">
+            <li><a href="comment.html">Comment</a> </li>
+        </ul>
+    </li>
+{% endblock %}

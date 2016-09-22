@@ -1,0 +1,103 @@
+{% extends "admin/layout.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+
+
+    <div class="row page-title-row">
+        <div class="col-md-6">
+            <h3 class="pull-left">Uploads </h3>
+
+        </div>
+        <div class="col-md-6 text-right">
+            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modal-file-upload">
+                <i class="fa fa-upload"></i> Upload
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            {% include 'admin/partials/success.html' %}
+
+            <table id="uploads-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Date</th>
+                        <th>Size</th>
+                        <th data-sortable="false">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="#">
+
+                                <i class="fa fa-file-image-o fa-lg fa-fw"></i>
+
+                                <i class="fa fa-file-o fa-lg fa-fw"></i>
+
+
+                            </a>
+                        </td>
+                        <td>file['mimeType'] or Unknown</td>
+                        <td>file['modified']->format('j-M-y g:ia') </td>
+                        <td> human_filesize(file['size']) </td>
+                        <td>
+                            <button type="button" class="btn btn-xs btn-danger" onclick="delete_file()">
+                                <i class="fa fa-times-circle fa-lg"></i>
+                                Delete
+                            </button>
+
+                                <button type="button" class="btn btn-xs btn-success" onclick="preview_image()">
+                                    <i class="fa fa-eye fa-lg"></i>
+                                    Preview
+                                </button>
+
+                        </td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% include 'admin/upload/_modals.html' %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    // 确认文件删除
+    function delete_file(name) {
+        $("#delete-file-name1").html(name);
+        $("#delete-file-name2").val(name);
+        $("#modal-file-delete").modal("show");
+    }
+
+    // 确认目录删除
+    function delete_folder(name) {
+        $("#delete-folder-name1").html(name);
+        $("#delete-folder-name2").val(name);
+        $("#modal-folder-delete").modal("show");
+    }
+
+    // 预览图片
+    function preview_image(path) {
+        $("#preview-image").attr("src", path);
+        $("#modal-image-view").modal("show");
+    }
+
+    // 初始化数据
+    $(function() {
+        $("#uploads-table").DataTable();
+    });
+</script>
+
+{% endblock %}

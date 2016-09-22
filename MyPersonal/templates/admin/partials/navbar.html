@@ -1,0 +1,43 @@
+
+<ul id="menu" class="nav navbar-nav">
+    <li><a href="/">Blog Home</a></li>
+        {%if 'posts/' in request.path %}
+        <li class="active">
+        {% else %}
+        <li>
+        {% endif %}
+            <a href="{% url 'Admin:posts' %}">Posts</a>
+        </li>
+        {% if 'tags/' in request.path %}
+        <li class="active">
+        {% else %}
+        <li >
+        {% endif %}
+            <a href="{% url 'Admin:tags' %}">Tags</a>
+        </li>
+        {% if 'upload/' in request.path %}
+        <li class="active">
+        {% else %}
+        <li>
+        {% endif %}
+            <a href="{% url 'Admin:upload' %}">Uploads</a>
+        </li>
+
+</ul>
+
+<ul class="nav navbar-nav navbar-right">
+    {% if user.username == Node or user.username == '' %}
+        <li><a href="{%url 'Admin:login' %}">Login</a></li>
+    {% else %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                    aria-expanded="false">
+                {{ user.username }}
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{% url 'Admin:logout' %}">Logout</a></li>
+            </ul>
+        </li>
+    {% endif %}
+</ul>

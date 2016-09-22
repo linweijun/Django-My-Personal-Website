@@ -19,7 +19,9 @@
                     <li><i class="fa fa-user"></i>By {{ author}}</li>
                     <li><i class="fa fa-calendar"></i>{{ Article_Deta.publish_date}}</li>
                     <li><i class="fa fa-comments"></i>{{ Article_Deta.readcount }}</li>
-                    <li><i class="fa fa-tags"></i> {{ Article_Deta.tags }}</li>
+                    {% for tags in tags%}
+                    <li><i class="fa fa-tags"></i> {{tags.tag }}</li>
+                    {% endfor %}
                   </ul>
 
 

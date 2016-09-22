@@ -1,0 +1,21 @@
+                    <input name="title" class="form-control" id="title" type="text" value="{{ post.title }}" placeholder="Title?" required="required"/>
+                <hr />
+                    <textarea name="content" id="content" data-provide="markdown" rows="10">{{ post.content}}</textarea>
+                <hr />
+                    <select id="tags" class="form-control">
+                        {% if 'edit' in request.path %}
+                        {% for tag in tags %}
+                        <option value="{{ tag.id}}">{{ tag.tag}}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option >选择标签</option>
+                        {% for tag in tags %}
+                        <option value="{{ tag.id}}">{{ tag.tag}}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                <hr />
+                    <input id="slug" class="form-control" value="{{ post.slug }}" placeholder="slug" required="required">
+                <hr/>
+
+

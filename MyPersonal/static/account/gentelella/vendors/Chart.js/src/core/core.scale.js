@@ -339,7 +339,7 @@ module.exports = function(Chart) {
 					// A vertical axis is more constrained by the width. Labels are the dominant factor here, so get that length first
 					var maxLabelWidth = this.maxWidth - minSize.width;
 
-					// Account for padding
+					// admin for padding
 					var mirror = tickOpts.mirror;
 					if (!mirror) {
 						largestTextWidth += this.options.ticks.padding;

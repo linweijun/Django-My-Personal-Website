@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{% block title %}Management {% endblock %} </title>
+    <title>{% block title %}User | Next Day {% endblock %} </title>
     {% load static %}
     <link rel="shortcut icon" href="{% static 'favicon.ico' %}">
 
@@ -25,7 +25,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{%url 'Account:login'%}" class="site_title"><i class="fa fa-rocket"></i> <span>Netx Day</span></a>
+              <a href="{%url 'Display:index'%}" class="site_title"><i class="fa fa-rocket"></i> <span>Netx Day</span></a>
             </div>
                     <!-- menu profile quick info -->
             <div class="clearfix"></div>
@@ -57,11 +57,18 @@
                             <ul class="nav child_menu">
                                 <li><a href="new.html">New Article</a></li>
                                 <li><a href="articles_management.html">Management Articles</a></li>
+                                <li><a href="asd">Article List</a> </li>
+                                <li><a href="dasd">edit</a></li>
                             </ul>
                         </li>
                         <li><a><i class="fa fa-comment"></i>Comment<span class="fa fa-chevron-down"></span> </a>
                             <ul class="nav child_menu">
                                 <li><a href="comment.html">Comment</a> </li>
+                            </ul>
+                        </li>
+                        <li><a><i class="fa fa-calendar"></i>Todo<span class="fa fa-chevron-down"></span> </a>
+                            <ul class="nav child_menu">
+                                <li><a href="todo.html">Todo List</a> </li>
                             </ul>
                         </li>
                         {% endblock %}

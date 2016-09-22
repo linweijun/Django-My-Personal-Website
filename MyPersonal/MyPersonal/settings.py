@@ -34,9 +34,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Display',
-    'Account',
-    'Article',
+    'Admin',
+    'MyPersonal',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -48,6 +47,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'MyPersonal.urls'
@@ -55,8 +55,11 @@ ROOT_URLCONF = 'MyPersonal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates/account'),
-                 os.path.join(BASE_DIR, 'templates/error'), os.path.join(BASE_DIR, 'templates/Article')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR, 'templates/error'),
+                 os.path.join(BASE_DIR, 'templates/admin/auth'),os.path.join(BASE_DIR, 'templates/admin'),
+                 os.path.join(BASE_DIR, 'templates/admin/tags'),os.path.join(BASE_DIR, 'templates/blog'),
+                 os.path.join(BASE_DIR, 'templates/blog/layouts'),os.path.join(BASE_DIR, 'templates/blog/partials'),
+                 os.path.join(BASE_DIR, 'templates/admin/post'), os.path.join(BASE_DIR,'templates/admin/upload')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,6 +138,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
+MEDIA_URL = '/media/test/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/test")
 
 #Password storage system
 PASSWORD_HASHERS = [
@@ -149,4 +154,3 @@ AUTHENTICATION_BACKENDS = (
 
 #
 LOGIN_URL = '/account'
-REDIRECT_FIELD_NAME = 'to'

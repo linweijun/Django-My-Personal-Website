@@ -14,16 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include,handler403,handler500,handler404
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import urlU
+from .views import index, show_Posts
+
 
 urlpatterns = [
-    url(r'^', include('Display.urls')),
-    url(r'^account/', include('Account.urls')),
-    url(r'^yanzhen',urlU, name='yanzhen')
-]
+    url(r'^$', index,name='index'),
+    url(r'^posts/([\w]+)$', show_Posts,name='show'),
+    url(r'^admin/', include('Admin.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'MyPersonal.views.my_custom_page_not_found_view'
 handler403 = 'MyPersonal.views.my_custom_permission_denied_view'
 handler500 = 'MyPersonal.views.my_custom_error_view'

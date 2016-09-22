@@ -20,7 +20,7 @@ function getCookie(name) {
 $(document).ready(function() {
     toastr.options.positionClass = 'toast-top-right';
     //Login
-    $(this).on('submit', '#form_login', function (e) {
+    $(this).on('submit', '#login', function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -52,33 +52,54 @@ $(document).ready(function() {
     });
 
     //Register
-    $(this).on('submit', '#form_register', function (e) {
+    $(this).on('submit', '#register', function (e) {
+        toastr.options = {
+                  "closeButton": false,
+                  "debug": false,
+                  "newestOnTop": false,
+                  "progressBar": true,
+                  "positionClass": "toast-top-full-width",
+                  "preventDuplicates": false,
+                  "onclick": null,
+                  "showDuration": "0",
+                  "hideDuration": "0",
+                  "timeOut": "0",
+                  "extendedTimeOut": "0",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+}
         e.preventDefault();
         $.ajax({
             type: "POST",
             url: '',
             data: {
                username:$('#username').val(),password:$('#password').val(),
-               password_confirm:$('#password_confirm').val(),
+               password_confirm:$('#password-confirm').val(),
                 email:$('#email').val(),
                 csrfmiddlewaretoken: getCookie('csrftoken')
             },
             cache: false,
 
             success: function (json) {
-                var resulr = json.url;
+                var rebackurl;
+                var rebackurl = json.url;
                 if (json.status == 'success') {
-                    toastr.success(json.message);
+                    toastr["success"](json.message+"<div><strong><a style='color: red' href="+rebackurl+">返回登入</a></strong></div>");
                 } else {
-                    toastr.error(json.message)
+                    toastr["error"](json.message)
                 }
             }
         })
 
     });
 
-    // Article_CREATE
-    $(this).on('submit', '#form_article', function (e) {
+    // Posts_CREATE
+
+
+    //create_tags
+    $(this).on('submit', '#create_tags', function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -86,24 +107,13 @@ $(document).ready(function() {
             url:'',
             data:{
                 csrfmiddlewaretoken: getCookie('csrftoken'),
-                title:$('#title').val(),
-                content:$('#content').val(),
-                tags:$('#tags').val(),
-                classic:$('#classic').val(),
-                slug:$('#slug').val()
+                tags: $('#tags').val(),
+                meta_description:$('#meta_description').val()
             },
-
-            success:function (json) {
-                if (json.status == 'success'){
-                    toastr.success(json.message)
-                }else{
-                    toastr.error(json.message)
-                }
-            }
         })
-    });
+    })
 
-    //fields validate
+
 
 
 });
