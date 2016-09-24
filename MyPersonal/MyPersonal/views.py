@@ -21,19 +21,21 @@ def my_custom_error_view(request):
 # Create your views here
 
 def index(request):
-
-    posts = Posts.objects.all().order_by('-publish_date')
-    tags = posts[0].tags.all()
-    paginator = Paginator(posts, 4)
-    page = request.GET.get('page')
     try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        contacts = paginator.page(1)
-    except EmptyPage:
-        contacts = paginator.page(paginator.num_pages)
+        posts = Posts.objects.all().order_by('-publish_date')
+        tags = posts[0].tags.all()
+        paginator = Paginator(posts, 4)
+        page = request.GET.get('page')
+        try:
+            contacts = paginator.page(page)
+        except PageNotAnInteger:
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
+        return render(request, 'blog_index.html', {'contacts': contacts, 'tags': tags})
+    except:
+        return render(request, 'blog_index.html')
 
-    return render(request, 'blog_index.html',{'contacts': contacts, 'tags': tags})
 
 def show_Posts(request, slug):
     Categories = Tags.objects.all()

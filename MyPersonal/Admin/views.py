@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 import time
 from django.contrib import messages
+from django.core.exceptions import  ObjectDoesNotExist
 from .models import Tags, Posts
 # Create your views here.
 
@@ -62,16 +63,35 @@ def register(request):
 
 
 def Post_index(request):
-    posts = Posts.objects.all()
-    tags = posts[0].tags.all()
-    return  render(request, 'posts_index.html', {"posts":posts, 'tags':tags })
+    try:
+        posts = Posts.objects.all()
+        tags = posts[0].tags.all()
+        return  render(request, 'posts_index.html', {"posts":posts, 'tags':tags })
+    except:
+        return render(request, 'posts_index.html')
 
 def Post_edit(request,id):
-    if request.method == "POST":
+    if request.method == 'POST':
         method = request.POST['_method']
         post_id = id
         if method == 'DELETE':
-            del_status = Tags.objects.get(id=post_id).delete()
+            post_name = Posts.objects.get(id=post_id)
+            del_status = Posts.objects.get(id=post_id).delete()
+            if del_status:
+                messages.success(request, "The '" + post_name.title + "' posts has been deleted.")
+                return HttpResponseRedirect("/admin/posts")
+        elif method == 'PUT':
+            userid = request.user.id
+            title = request.POST['title']
+            content = request.POST['content']
+            tag = request.POST['tags']
+            slug = request.POST['slug']
+
+            update_status = posts_update(id, title, content, userid, tag, slug)
+            if update_status:
+                return JsonResponse({'status': 'success', 'message': '文章修改成功'})
+            else:
+                return JsonResponse({'status': 'error', 'message':"数据库君可能心情不好，要不你在检查检查"})
     post = Posts.objects.get(id=id)
     tags = post.tags.all()
     return render(request, 'posts_edit.html', {"post":post, "tags":tags })
@@ -83,6 +103,14 @@ def Post_create(request):
         title = request.POST['title']
         content = request.POST['content']
         tags = request.POST['tags']
+        #处理tags
+        try:
+            tags_id_status= Tags.objects.get(tag=tags)
+            tags_id = tags_id_status.id
+        except ObjectDoesNotExist:
+            tags_save_status = Tags(tag=tags)
+            tags_save_status.save()
+            tags_id = tags_save_status.id
         slug = request.POST['slug']
         date = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
         try:
@@ -90,7 +118,7 @@ def Post_create(request):
             post = Posts(title=title, content=content,publish_date=date,
                                    readcount=0,author_id=userid,slug=slug)
             post.save()
-            post.tags.add(Tags.objects.get(id=tags))
+            post.tags.add(Tags.objects.get(id=tags_id))
             post.save()
 
 
@@ -126,7 +154,6 @@ def edit_tags(request, id):
         method = request.POST['_method']
         tags_id = id
         if method == 'DELETE':
-
             tags_name = Tags.objects.get(id=tags_id)
             del_status = Tags.objects.get(id=tags_id).delete()
             if del_status:
@@ -145,13 +172,43 @@ def edit_tags(request, id):
     return render(request, 'tags_edit.html', {'data':data})
 
 def tags_update(id,tag,meta):
-    p = Tags.objects.get(id=id)
+    tags = Tags.objects.get(id=id)
 
-    p.tag = tag
-    p.meta_description = meta
-    p.save()
+    tags.tag = tag
+    tags.meta_description = meta
+    tags.save()
 
     return True
+
+def posts_update(id,title,content,userid,tag,slug):
+    #获取文章标签并判断
+    post = Posts.objects.get(id=id)
+    tags = post.tags.all()
+    if tag in tags:
+        post.title = title
+        post.content = content
+        post.author_id = userid
+        post.slug = slug
+        post.save()
+    else:
+        try:# 处理tags
+            tags_id_status = Tags.objects.get(tag=tag)
+            tags_id = tags_id_status.id
+        except ObjectDoesNotExist:
+            tags_save_status = Tags(tag=tag)
+            tags_save_status.save()
+            tags_id = tags_save_status.id
+
+        post.title = title
+        post.content = content
+        post.author_id=userid
+        post.slug = slug
+        post.save()
+        post.tags.add(Tags.objects.get(id=tags_id))
+        post.save()
+
+    return True
+
 
 
 def upload_index(request):
