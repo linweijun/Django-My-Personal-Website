@@ -104,13 +104,7 @@
                 tags: $('#tags').val()[0],
                 slug: $('#slug').val()
             },
-            success:function (json) {
-                if (json.status == 'success'){
-                    toastr.success(json.message)
-                }else{
-                    toastr.error(json.message)
-                }
-        }});
+           });
     });
 
 

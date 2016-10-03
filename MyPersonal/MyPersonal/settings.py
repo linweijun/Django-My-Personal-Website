@@ -23,7 +23,7 @@ SECRET_KEY = 'b6+5!=+%qs048nn*kxuk0w9f27ux__422j-53+gc_t=jadk8q@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '*']
 
 
 # Application definition
@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Admin',
     'MyPersonal',
+    'upload',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -47,7 +48,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'pagination.middleware.PaginationMiddleware',
 ]
 
 ROOT_URLCONF = 'MyPersonal.urls'
@@ -138,8 +138,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-MEDIA_URL = '/media/test/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media/test")
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 #Password storage system
 PASSWORD_HASHERS = [
@@ -153,4 +153,10 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #
-LOGIN_URL = '/account'
+LOGIN_URL = '/admin/login'
+
+FILE_UPLOAD_HANDLERS = [
+    "django.core.files.uploadhandler.MemoryFileUploadHandler",
+    "django.core.files.uploadhandler.TemporaryFileUploadHandler"
+]
+FILE_CHARSET= 'utf-8'

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+        <head>
+                <meta charset="utf-8">
+                <title>Minimal Django File Upload Example</title>
+        </head>
+
+        <body>
+                <!-- List of uploaded documents -->
+                {% if doc %}
+                        <ul>
+                        {% for doc in doc %}
+                                {{ doc.name }}
+                                {{ doc.image }}
+                                {{ doc.datetiem }}
+                        {% get_media_prefix as MEDIA_PREFIX %}
+                        {{ MEDIA_PREFIX }}{{ doc.image }}
+                                <hr />
+                        {% endfor %}
+                        </ul>
+                {% else %}
+                        <p>No documents.</p>
+                {% endif %}
+
+                <!-- Upload form. Note enctype attribute! -->
+                <form action="{% url "uploads" %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="file" name="image">
+                <input name="name" type="text">
+                        <p><input type="submit" value="Upload" /></p>
+                </form>
+
+        </body>
+
+</html>

@@ -16,7 +16,9 @@ function getCookie(name) {
         }
         return cookieValue;
      }
-//Get Times
+
+
+
 $(document).ready(function() {
     toastr.options.positionClass = 'toast-top-right';
     //Login
@@ -33,18 +35,9 @@ $(document).ready(function() {
             cache: false,
 
             success: function (json) {
-                var rebackurl;
-                var url = window.location.search;
-                if (url){
-                    rebackurl = url.slice(15);
+                if(json.status == 'success') {
+                    location.href = json.url;
                 }else {
-                    rebackurl = json.url;
-                }
-                if (json.status == 'success') {
-                    toastr.success(json.message);
-                    setTimeout(location.href= rebackurl, 3000);
-
-                } else {
                     toastr.error(json.message)
                 }
             }
@@ -53,23 +46,6 @@ $(document).ready(function() {
 
     //Register
     $(this).on('submit', '#register', function (e) {
-        toastr.options = {
-                  "closeButton": false,
-                  "debug": false,
-                  "newestOnTop": false,
-                  "progressBar": true,
-                  "positionClass": "toast-top-full-width",
-                  "preventDuplicates": false,
-                  "onclick": null,
-                  "showDuration": "0",
-                  "hideDuration": "0",
-                  "timeOut": "0",
-                  "extendedTimeOut": "0",
-                  "showEasing": "swing",
-                  "hideEasing": "linear",
-                  "showMethod": "fadeIn",
-                  "hideMethod": "fadeOut"
-}
         e.preventDefault();
         $.ajax({
             type: "POST",
@@ -79,17 +55,6 @@ $(document).ready(function() {
                password_confirm:$('#password-confirm').val(),
                 email:$('#email').val(),
                 csrfmiddlewaretoken: getCookie('csrftoken')
-            },
-            cache: false,
-
-            success: function (json) {
-                var rebackurl;
-                var rebackurl = json.url;
-                if (json.status == 'success') {
-                    toastr["success"](json.message+"<div><strong><a style='color: red' href="+rebackurl+">返回登入</a></strong></div>");
-                } else {
-                    toastr["error"](json.message)
-                }
             }
         })
 

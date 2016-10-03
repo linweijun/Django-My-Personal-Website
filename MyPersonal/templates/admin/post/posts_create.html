@@ -70,7 +70,7 @@
 
             success:function (json) {
                 if (json.status == 'success'){
-                    toastr.success(json.message)
+                    location.href = json.url;
                 }else{
                     toastr.error(json.message)
                 }

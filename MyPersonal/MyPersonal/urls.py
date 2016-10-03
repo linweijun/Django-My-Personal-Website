@@ -19,10 +19,12 @@ from django.conf.urls.static import static
 from .views import index, show_Posts
 
 
+
 urlpatterns = [
     url(r'^$', index,name='index'),
     url(r'^posts/([\w]+)$', show_Posts,name='show'),
     url(r'^admin/', include('Admin.urls')),
+    url(r'^uploads/',include('upload.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 handler404 = 'MyPersonal.views.my_custom_page_not_found_view'
 handler403 = 'MyPersonal.views.my_custom_permission_denied_view'

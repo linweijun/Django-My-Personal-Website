@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render, redirect, HttpResponse, Http404, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponse, reverse,Http404, HttpResponseRedirect
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
@@ -10,67 +10,74 @@ import time
 from django.contrib import messages
 from django.core.exceptions import  ObjectDoesNotExist
 from .models import Tags, Posts
+from django.db import IntegrityError
+
 # Create your views here.
 
 
 def logout_views(request):
     logout(request)
-    return HttpResponseRedirect("/index")
+    return HttpResponseRedirect('/')
+
 
 def login_views(request):
-    if request.user.is_authenticated:
-        username = request.user.username
-        url = "/account/user/" + username
-        return HttpResponseRedirect(url)
-
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/admin/posts')
     else:
         if request.method == 'POST':
             username = request.POST['username']
             password = request.POST['password']
-            user_status =authenticate(username=username, password=password)
+            user_status = authenticate(username=username, password=password)
             if user_status:
                 login(request,user_status)
-                return JsonResponse({'status':'success','message':'登入成功','url':'/'})
+                messages.success(request, "欢迎回来")
+                return JsonResponse({'url': '/admin/posts', 'status': 'success'})
             else:
                 if User.objects.filter(username=username):
-                    return JsonResponse({'status':'error', 'message':'密码错误'})
+                    return JsonResponse({'message': "密码错误", 'status': 'error'})
                 else:
-                    return JsonResponse({'status':'error','message':'用户不存在'})
-        return render(request, "login.html")
+                    return JsonResponse({'status': 'error','message': "用户不存在"})
+        return render(request, 'login.html')
+
 
 def register(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        password_confirm = request.POST['password_confirm']
-        email = request.POST['email']
+    if request.user.is_authenticated():
+        return HttpResponseRedirect('/admin/posts')
+    else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
+            password_confirm = request.POST['password_confirm']
+            email = request.POST['email']
 
-        if password == password_confirm:
-            username_status = User.objects.filter(username=username)
-            if username_status:
-                return JsonResponse({'status':'error','message':'用户名已经存在'})
+            if password == password_confirm:
+                username_status = User.objects.filter(username=username)
+                if username_status:
+                    return JsonResponse({'status': 'error','message': "用户名已经存在"})
+                else:
+                    try:
+                        User.objects.create(username=username,email=email,
+                                            password=make_password(password_confirm))
+                        return HttpResponseRedirect('/admin/login')
+                    except:
+                        pass
             else:
-                try:
-                    User.objects.create(username=username,email=email,password=make_password(password_confirm))
-                except:
-                    pass
-                return JsonResponse({'status':'success', 'message':'用户创建成功','url':'/account/login'})
-        else:
-            return JsonResponse({'status':'error', 'message':'两次密码不一致'})
+                return JsonResponse({'status': 'error', 'message': "两次密码不一致"})
+        return render(request, 'register.html')
 
 
-    return render(request, "register.html")
-
-
-def Post_index(request):
+@login_required
+def post_index(request):
     try:
         posts = Posts.objects.all()
         tags = posts[0].tags.all()
-        return  render(request, 'posts_index.html', {"posts":posts, 'tags':tags })
+        return render(request, 'posts_index.html', {'posts': posts, 'tags': tags})
     except:
         return render(request, 'posts_index.html')
 
-def Post_edit(request,id):
+
+@login_required
+def post_edit(request,id):
     if request.method == 'POST':
         method = request.POST['_method']
         post_id = id
@@ -79,7 +86,7 @@ def Post_edit(request,id):
             del_status = Posts.objects.get(id=post_id).delete()
             if del_status:
                 messages.success(request, "The '" + post_name.title + "' posts has been deleted.")
-                return HttpResponseRedirect("/admin/posts")
+                return HttpResponseRedirect("/admin/posts/")
         elif method == 'PUT':
             userid = request.user.id
             title = request.POST['title']
@@ -89,22 +96,24 @@ def Post_edit(request,id):
 
             update_status = posts_update(id, title, content, userid, tag, slug)
             if update_status:
-                return JsonResponse({'status': 'success', 'message': '文章修改成功'})
+                messages.success(request, "The '" + title + "' posts has been updated.")
+                return JsonResponse({'status': 'success', 'url': '/admin/posts'})
             else:
-                return JsonResponse({'status': 'error', 'message':"数据库君可能心情不好，要不你在检查检查"})
+                return JsonResponse({'status': 'error', 'message': "数据库君可能心情不好，要不你在检查检查"})
     post = Posts.objects.get(id=id)
     tags = post.tags.all()
-    return render(request, 'posts_edit.html', {"post":post, "tags":tags })
+    return render(request, 'posts_edit.html', {'post': post, "tags": tags})
 
 
-def Post_create(request):
+@login_required
+def post_create(request):
     if request.method == 'POST':
-        userid = request.user.id
         title = request.POST['title']
         content = request.POST['content']
         tags = request.POST['tags']
-        #处理tags
+
         try:
+            # 处理tags
             tags_id_status= Tags.objects.get(tag=tags)
             tags_id = tags_id_status.id
         except ObjectDoesNotExist:
@@ -114,28 +123,28 @@ def Post_create(request):
         slug = request.POST['slug']
         date = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
         try:
-
-            post = Posts(title=title, content=content,publish_date=date,
-                                   readcount=0,author_id=userid,slug=slug)
+            post = Posts(title=title, content=content, publish_date=date,
+                         readcount=0, author_id=request.user.id, slug=slug)
             post.save()
             post.tags.add(Tags.objects.get(id=tags_id))
             post.save()
+            messages.success(request, "文章创建成功")
+            return JsonResponse({'status': 'success', 'url': '/admin/posts/'})
+        except IntegrityError:
+                return JsonResponse({'status': 'error', 'message': "请检查标题或者slug是否重复了"})
 
-
-            if post:
-                return JsonResponse({'status':'success', 'message':'文章保存成功'})
-        except :
-            return JsonResponse({'status':'error', 'message':'数据库君拒收～！请在检查检查！～'})
     tags = Tags.objects.all()
-    return render(request, "posts_create.html", {"tags": tags})
+    return render(request, "posts_create.html", {'tags': tags})
 
 
 # tags
-
-def Tag_index(request):
+@login_required
+def tag_index(request):
     tags = Tags.objects.all()
-    return render(request,'tags_index.html',{"tags": tags})
+    return render(request,'tags_index.html',{'tags': tags})
 
+
+@login_required
 def create_tags(request):
     if request.method == 'POST':
         tags = request.POST['tags']
@@ -149,6 +158,7 @@ def create_tags(request):
         return render(request,'tags_create.html')
 
 
+@login_required
 def edit_tags(request, id):
     if request.method == "POST":
         method = request.POST['_method']
@@ -171,6 +181,8 @@ def edit_tags(request, id):
     data = Tags.objects.get(id=id)
     return render(request, 'tags_edit.html', {'data':data})
 
+
+@login_required
 def tags_update(id,tag,meta):
     tags = Tags.objects.get(id=id)
 
@@ -180,9 +192,9 @@ def tags_update(id,tag,meta):
 
     return True
 
-def posts_update(id,title,content,userid,tag,slug):
-    #获取文章标签并判断
-    post = Posts.objects.get(id=id)
+
+def posts_update(id, title, content, userid, tag, slug):
+    post = Posts.objects.get(id=id)# 获取文章标签并判断
     tags = post.tags.all()
     if tag in tags:
         post.title = title
@@ -210,10 +222,12 @@ def posts_update(id,title,content,userid,tag,slug):
     return True
 
 
-
+@login_required
 def upload_index(request):
     return render(request, 'upload_index.html')
 
+
+@login_required
 def upload_files(request):
     files = request
 

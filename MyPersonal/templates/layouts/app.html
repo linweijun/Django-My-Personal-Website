@@ -15,13 +15,15 @@
 
 
     <!-- Styles -->
-    <link href="{% static '/css/bootstrap.min.css'%}" rel="stylesheet">
-    <link href="{% static '/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css'%}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/nprogress.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/animate.min.css' %}" rel="stylesheet">
     <link href="{% static 'assets/css/custom.min.css' %}" rel="stylesheet">
 
 </head>
+                    {% include 'admin/partials/success.html' %}
+
 
     {% block content %} {% endblock %}
 
