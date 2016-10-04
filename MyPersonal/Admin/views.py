@@ -58,7 +58,8 @@ def register(request):
                     try:
                         User.objects.create(username=username,email=email,
                                             password=make_password(password_confirm))
-                        return HttpResponseRedirect('/admin/login')
+                        messages.success(request, "注册成功，请登陆！")
+                        return JsonResponse({'status':'success', 'url':'/admin/login'})
                     except:
                         pass
             else:
@@ -86,7 +87,7 @@ def post_edit(request,id):
             del_status = Posts.objects.get(id=post_id).delete()
             if del_status:
                 messages.success(request, "The '" + post_name.title + "' posts has been deleted.")
-                return HttpResponseRedirect("/admin/posts/")
+                return HttpResponseRedirect('/admin/posts/')
         elif method == 'PUT':
             userid = request.user.id
             title = request.POST['title']
@@ -182,9 +183,8 @@ def edit_tags(request, id):
     return render(request, 'tags_edit.html', {'data':data})
 
 
-@login_required
-def tags_update(id,tag,meta):
-    tags = Tags.objects.get(id=id)
+def tags_update(tags_id, tag, meta):
+    tags = Tags.objects.get(id=tags_id)
 
     tags.tag = tag
     tags.meta_description = meta

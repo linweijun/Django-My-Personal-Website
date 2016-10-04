@@ -87,6 +87,8 @@
 <script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js"></script>
 <script src="{% static 'js/toastr.min.js' %}"></script>
 <script src="{% static 'js/selectize.min.js'%}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+
 
 <script>
     $("#content").markdown({autofocus:false,savable:false});
@@ -104,6 +106,15 @@
                 tags: $('#tags').val()[0],
                 slug: $('#slug').val()
             },
+            success:function (json) {
+                if (json.status == 'success'){
+                    location.href=json.url;
+                }
+                else {
+                    toastr.error(json.message);
+                }
+            }
+
            });
     });
 
