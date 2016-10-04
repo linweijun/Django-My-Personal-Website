@@ -12,13 +12,16 @@ from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 def my_custom_page_not_found_view(request):
     return render_to_response('404.html')
 
+
 def my_custom_permission_denied_view(request):
     return render_to_response('403.html')
+
 
 def my_custom_error_view(request):
     return render_to_response('500.html')
 
 # Create your views here
+
 
 def index(request):
     try:
@@ -37,21 +40,25 @@ def index(request):
         return render(request, 'blog_index.html')
 
 
-def show_Posts(request, slug):
-    Categories = Tags.objects.all()
-    Article_Deta = Posts.objects.get(slug=slug)
-    tags = Article_Deta.tags.all()
-    count = Article_Deta.readcount
+def show_posts(request, slug):
+    categories = Tags.objects.all()
+    article = Posts.objects.get(slug=slug)
+    tags = article.tags.all()
+    count = article.readcount
     count += 1
     try:
-        Article_Deta.readcount = count
-        Article_Deta.save()
+        article.readcount = count
+        article.save()
     except:
         pass
-    author = Article_Deta.author.username
-    return render(request, 'blog_item.html', {'Article_Deta':Article_Deta, 'tags':tags ,'author':author,'Categories':Categories})
+    author = article.author.username
+    return render(request, 'blog_post.html', {'article': article, 'tags': tags, 'author': author, 'categories': categories})
+
+
 def about_me(request):
     return render(request,'about_me.html')
+
+
 def about_the_web(request):
     return HttpResponse('test')
 
