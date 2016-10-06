@@ -55,8 +55,15 @@ $(document).ready(function() {
                password_confirm:$('#password-confirm').val(),
                 email:$('#email').val(),
                 csrfmiddlewaretoken: getCookie('csrftoken')
+            },
+            success:function (json) {
+                if(json.status == 'success'){
+                    location.href=json.url;
+                }else {
+                    toastr.error(json.message);
+                }
             }
-        })
+        });
 
     });
 

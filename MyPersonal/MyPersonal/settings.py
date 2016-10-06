@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'b6+5!=+%qs048nn*kxuk0w9f27ux__422j-53+gc_t=jadk8q@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False#True
 ALLOWED_HOSTS = ['127.0.0.1', '*']
 
 
@@ -153,7 +153,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 #
-LOGIN_URL = '/admin/login'
+LOGIN_URL = '/admin/login/'
 
 FILE_UPLOAD_HANDLERS = [
     "django.core.files.uploadhandler.MemoryFileUploadHandler",

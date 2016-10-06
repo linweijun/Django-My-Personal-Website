@@ -5,10 +5,13 @@
  <div>
     <div class="login_wrapper">
             <div class="animate form login_form">
+                {% include 'admin/partials/success.html' %}
                 <section class="login_content">
                     <form class="form-horizontal" role="form" id="login">
 
                         <h1>Login Form</h1>
+
+
                         {% csrf_token %}
 
                         <div class="form-group">

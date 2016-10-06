@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.shortcuts import render, redirect, HttpResponse, reverse,Http404, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
@@ -42,7 +42,7 @@ def login_views(request):
 
 def register(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect('/admin/posts')
+        return HttpResponseRedirect(post_index)
     else:
         if request.method == 'POST':
             username = request.POST['username']
@@ -53,13 +53,13 @@ def register(request):
             if password == password_confirm:
                 username_status = User.objects.filter(username=username)
                 if username_status:
-                    return JsonResponse({'status': 'error','message': "用户名已经存在"})
+                    return JsonResponse({'status': 'error', 'message': "用户名已经存在"})
                 else:
                     try:
                         User.objects.create(username=username,email=email,
                                             password=make_password(password_confirm))
                         messages.success(request, "注册成功，请登陆！")
-                        return JsonResponse({'status':'success', 'url':'/admin/login'})
+                        return JsonResponse({'status': 'success', 'url': '/admin/login/'})
                     except:
                         pass
             else:
@@ -87,7 +87,7 @@ def post_edit(request,id):
             del_status = Posts.objects.get(id=post_id).delete()
             if del_status:
                 messages.success(request, "The '" + post_name.title + "' posts has been deleted.")
-                return HttpResponseRedirect('/admin/posts/')
+                return HttpResponseRedirect('/admin/posts')
         elif method == 'PUT':
             userid = request.user.id
             title = request.POST['title']
@@ -130,7 +130,7 @@ def post_create(request):
             post.tags.add(Tags.objects.get(id=tags_id))
             post.save()
             messages.success(request, "文章创建成功")
-            return JsonResponse({'status': 'success', 'url': '/admin/posts/'})
+            return JsonResponse({'status': 'success', 'url': '/admin/posts'})
         except IntegrityError:
                 return JsonResponse({'status': 'error', 'message': "请检查标题或者slug是否重复了"})
 
@@ -154,7 +154,7 @@ def create_tags(request):
         object_status = Tags.objects.create(tag = tags,meta_description=meta_description)
         if object_status:
             messages.success(request, "The tag '" +tags+ "' was created.")
-            return HttpResponseRedirect("/admin/tags")
+            return HttpResponseRedirect('/admin/tags/')
     else:
         return render(request,'tags_create.html')
 
@@ -169,7 +169,7 @@ def edit_tags(request, id):
             del_status = Tags.objects.get(id=tags_id).delete()
             if del_status:
                 messages.success(request, "The '"+tags_name.tag+"' tag has been deleted.")
-                return HttpResponseRedirect("/admin/tags")
+                return HttpResponseRedirect('/admin/tags/')
         elif method == 'PUT':
 
             tag = request.POST['tag']
@@ -177,7 +177,7 @@ def edit_tags(request, id):
             update_status = tags_update(tags_id, tag, meta_description)
             if update_status:
                 messages.success(request, "The '" + tag + "' tag has been updated.")
-                return HttpResponseRedirect("/admin/tags")
+                return HttpResponseRedirect('/admin/tags/')
 
     data = Tags.objects.get(id=id)
     return render(request, 'tags_edit.html', {'data':data})
