@@ -133,6 +133,8 @@ def post_create(request):
             return JsonResponse({'status': 'success', 'url': '/admin/posts'})
         except IntegrityError:
                 return JsonResponse({'status': 'error', 'message': "请检查标题或者slug是否重复了"})
+        except:
+            return JsonResponse({'status':'error', 'message':"出错啦！！！"})
 
     tags = Tags.objects.all()
     return render(request, "posts_create.html", {'tags': tags})
