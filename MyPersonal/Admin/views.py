@@ -64,6 +64,9 @@ def register(request):
                         pass
             else:
                 return JsonResponse({'status': 'error', 'message': "两次密码不一致"})
+        admin_status = User.objects.all()
+        if admin_status:
+            messages.warning(request, "这个房间已经有人了，不能给你钥匙！～！")
         return render(request, 'register.html')
 
 

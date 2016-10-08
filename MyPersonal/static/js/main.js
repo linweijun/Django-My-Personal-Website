@@ -57,9 +57,9 @@ $(document).ready(function() {
                 csrfmiddlewaretoken: getCookie('csrftoken')
             },
             success:function (json) {
-                if(json.status == 'success'){
+                if(json.url){
                     location.href=json.url;
-                }else {
+                }else{
                     toastr.error(json.message);
                 }
             }

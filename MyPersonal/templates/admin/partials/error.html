@@ -1,0 +1,14 @@
+{%if messages %}
+<div class="messages">
+    <div class="alert alert-warning">
+        {% for message in messages %}
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>
+            <i class="fa fa-check-circle fa-fw"></i>Warning.
+        </strong>
+        {{ message }}
+        {% endfor %}
+    </div>
+</div>
+
+{% endif %}
