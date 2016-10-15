@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
-from django.views.generic.detail import DetailView
-from django.utils import timezone
-import time
 from Admin.models import Tags,Posts
+from django.core.mail import send_mail, BadHeaderError
+from django.contrib import messages
+from django.conf import settings
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 
 
@@ -27,6 +27,7 @@ def index(request):
     try:
         posts = Posts.objects.all().order_by('-publish_date')
         tags = posts[0].tags.all()
+        q = len(tags)
         paginator = Paginator(posts, 4)
         page = request.GET.get('page')
         try:
@@ -54,6 +55,10 @@ def show_posts(request, slug):
     author = article.author.username
     return render(request, 'blog_post.html', {'article': article, 'tags': tags, 'author': author, 'categories': categories})
 
+def contact(request):
+    if request.method == 'POST':
+        send_email(request)
+    return render(request, 'contact.html')
 
 def about_me(request):
     return render(request,'about_me.html')
@@ -61,4 +66,23 @@ def about_me(request):
 
 def about_the_web(request):
     return HttpResponse('test')
+
+
+
+def send_email(request):
+    message = request.POST['message']
+    emails = request.POST['email']
+    name = request.POST['name']
+    message_html = ("<h1>THis is Contact email <br> <p> name:%s <br> email: %s <br> <p> <hr>%s")%(name, emails, message)
+
+    if messages and emails and name:
+        try:
+            send_mail('from:Next Day messags', message_html, settings.EMAIL_HOST_USER, ['linweijun93315@gmail.com'], html_message=message_html)
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        messages.success(request, "Thinks your")
+        return render(request, 'contact.html')
+    else:
+        messages.warning(request, 'Make sure all fields are entered and valid.')
+        return render(request, 'contact.html')
 

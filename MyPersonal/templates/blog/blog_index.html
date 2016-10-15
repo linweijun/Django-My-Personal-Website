@@ -32,12 +32,12 @@
             </a>
             <p class="post-meta">
               Posted on {{ contacts.publish_date }}
-
-                in {% for tags in tags%}{{ tags.tag}}{% endfor %}
-
+               in {% for tags in tags%}{{ tags.tag}}
+               {% endfor %}
             </p>
               <hr>
           </div>
+
 
             {% endfor %}
 

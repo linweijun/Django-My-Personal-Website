@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import index, show_posts
+from .views import index, show_posts, contact
 
 
 
 urlpatterns = [
     url(r'^$', index,name='index'),
+    url(r'^contact/',contact, name='contact'),
     url(r'^posts/([\w]+)$', show_posts,name='show'),
     url(r'^admin/', include('Admin.urls')),
     url(r'^uploads/',include('upload.urls')),

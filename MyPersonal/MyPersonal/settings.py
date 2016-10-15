@@ -159,4 +159,11 @@ FILE_UPLOAD_HANDLERS = [
     "django.core.files.uploadhandler.MemoryFileUploadHandler",
     "django.core.files.uploadhandler.TemporaryFileUploadHandler"
 ]
-FILE_CHARSET= 'utf-8'
+
+#E-mail
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=25
+EMAIL_HOST_USER='****@gmail.com'
+EMAIL_HOST_PASSWORD='**********'
+EMAIL_USE_TLS=True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

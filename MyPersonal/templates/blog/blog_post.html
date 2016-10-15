@@ -11,7 +11,7 @@
             <h1>{{ article.title }}</h1>
             <span class="meta">
               Posted on {{ article.publish_date }}
-              in {% for tags in tags%}{{ tags.tag}}{% endfor %}
+              in {% for tags in tags%}{{ tags.tag}}{% if q > 1 %}, {% endif %}{% endfor %}
             </span>
           </div>
         </div>
