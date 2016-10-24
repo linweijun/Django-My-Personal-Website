@@ -36,7 +36,7 @@ def index(request):
             contacts = paginator.page(1)
         except EmptyPage:
             contacts = paginator.page(paginator.num_pages)
-        return render(request, 'blog_index.html', {'contacts': contacts, 'tags': tags})
+        return render(request, 'blog_index.html', {'contacts': contacts})
     except:
         return render(request, 'blog_index.html')
 
