@@ -1,13 +1,7 @@
 # Django-My-Personal-Website
 ##### 自己挖的挖坑，跪着也得填完。
 #项目简介
-##### 一句话概括
-> 简易个人博客。基本的增删改查的实现。
+本项目以Django框架开发的博客系统，包括博客文章创建、编辑，添加标签。目前各项功能已经完善。可能写得不太好。就当是个练手的小项目。欢迎指点。自己也使用了这套代码开了[个人博客](http://nextday.xfuture.xyz/)。
 
-##### 使用的技术
-> 前端：[Bootstrap3](http://getbootstrap.com/) + [Toastr](http://codeseven.github.io/toastr/)+[jQuery](https://jquery.com/) + [Gentelella](https://github.com/puikinsh/gentelella)+[Metronic](https://github.com/mikesmayer/metronic)+[Bootstrap-markdown](https://github.com/toopay/bootstrap-markdown)
-
-> 后端：Django
-
-##### 已知小问题
-> Bootstrap-markdown 预览模式无效
+### 联系
+可以通过Issues 或者 通过网站Contact联系。谢谢。
