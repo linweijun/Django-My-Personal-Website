@@ -1,0 +1,63 @@
+{% extends "layouts/../../../templates/app.html" %}
+
+{% block content %}
+<body class="login">
+<div>
+    <div class="login_wrapper">
+        <div >
+            <section class="login_content">
+                {% include 'admin/partials/error.html' %}
+                <form class="form-horizontal" role="form" method="POST" id="register">
+
+                    <h1>Create Account</h1>
+                                            {% csrf_token %}
+
+                        <div class="form-group">
+                                <input id="username" type="text" class="form-control" placeholder="Name" name="name" >
+                        </div>
+
+                        <div class="form-group">
+                            <input id="email" type="email" class="form-control" name="email" placeholder="Email" required>
+                        </div>
+
+                    <div class="form-group">
+                        <input id="password" type="password" class="form-control" name="password" placeholder="Password"  required>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                               placeholder="Password-confirm"required>
+
+                    </div>
+
+                    <div>
+                        {%if messages %}
+                        <button disabled="true" class="btn btn-default submit" >Submit</button>
+                        {% else %}
+                        <button  class="btn btn-default submit" >Submit</button>
+                        {% endif %}
+
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
+                        <p class="change_link">Already a member ?
+                            <a href="{%url 'Admin:login' %}" > Log in </a>
+                        </p>
+
+                        <div class="clearfix"></div>
+                        <br />
+
+                        <div>
+                            <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
+                            <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}

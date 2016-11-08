@@ -6,54 +6,52 @@ from Admin.models import Tags,Posts
 from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
 from django.conf import settings
-from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from django.views.generic import ListView, DetailView
+from django.views.generic.list import MultipleObjectMixin
 
 
-def my_custom_page_not_found_view(request):
-    return render_to_response('404.html')
+def page_not_found_view(request):
+
+    return render_to_response('handler.html',{'title': 'Not Found', 'error_number': '404',
+                                              'content_head': 'Sorry but we couldn\'t find this page',
+                                              'content': 'This page you are looking for does not exist.'})
 
 
-def my_custom_permission_denied_view(request):
-    return render_to_response('403.html')
+def permission_denied_view(request):
+    return render_to_response('handler.html',{'title': 'Permission Denied', 'error_number': '403',
+                                              'content_head': 'Access denied',
+                                              'content': 'Full authentication is required to access this resource.'})
 
 
-def my_custom_error_view(request):
-    return render_to_response('500.html')
+def error_view(request):
+    return render_to_response('handler.html',{'title': 'Internal Server Error', 'error_number':'500',
+                                              'content_head': 'Internal Server Error',
+                                              'content': 'We track these errors automatically, '
+                                                         'but if the problem persists feel free to contact us.'})
 
 # Create your views here
 
 
-def index(request):
-    try:
-        posts = Posts.objects.all().order_by('-publish_date')
-        tags = posts[0].tags.all()
-        q = len(tags)
-        paginator = Paginator(posts, 4)
-        page = request.GET.get('page')
-        try:
-            contacts = paginator.page(page)
-        except PageNotAnInteger:
-            contacts = paginator.page(1)
-        except EmptyPage:
-            contacts = paginator.page(paginator.num_pages)
-        return render(request, 'blog_index.html', {'contacts': contacts})
-    except:
-        return render(request, 'blog_index.html')
+class IndexView(ListView):
+    template_name = 'blog/blog_index.html'
+    context_object_name = 'Article_list'
+    paginate_by = 4
+
+    def get_queryset(self):
+        Article_list = Posts.objects.all().order_by('-publish_date')
+        return Article_list
 
 
-def show_posts(request, slug):
-    categories = Tags.objects.all()
-    article = Posts.objects.get(slug=slug)
-    tags = article.tags.all()
-    count = article.readcount
-    count += 1
-    try:
-        article.readcount = count
-        article.save()
-    except:
-        pass
-    author = article.author.username
-    return render(request, 'blog_post.html', {'article': article, 'tags': tags, 'author': author, 'categories': categories})
+class ShowPostsViews(DetailView):
+    model = Posts
+    template_name = 'blog/blog_post.html'
+    context_object_name = 'posts'
+    slug_url_kwarg = 'slug'
+
+    def get_context_data(self, **kwargs):
+        kwargs['tags'] = self.object.tags.all()
+        return super(ShowPostsViews, self).get_context_data(**kwargs)
+
 
 def contact(request):
     if request.method == 'POST':

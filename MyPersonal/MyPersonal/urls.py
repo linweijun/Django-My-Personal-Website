@@ -16,20 +16,20 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import index, show_posts, contact
+from .views import IndexView, ShowPostsViews, contact
 
 
 
 urlpatterns = [
-    url(r'^$', index,name='index'),
+    url(r'^$', IndexView.as_view(), name='index'),
     url(r'^contact/',contact, name='contact'),
-    url(r'^posts/([\w]+)$', show_posts,name='show'),
+    url(r'^posts/(?P<slug>\w+)$', ShowPostsViews.as_view(), name='show'),
     url(r'^admin/', include('Admin.urls')),
     url(r'^uploads/',include('upload.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler404 = 'MyPersonal.views.my_custom_page_not_found_view'
-handler403 = 'MyPersonal.views.my_custom_permission_denied_view'
-handler500 = 'MyPersonal.views.my_custom_error_view'
+handler404 = 'MyPersonal.views.page_not_found_view'
+handler403 = 'MyPersonal.views.permission_denied_view'
+handler500 = 'MyPersonal.views.error_view'
 
 

@@ -1,5 +1,5 @@
 {% extends 'blog/layouts/master.html' %}
-{% block title %}{{ article.title }} | Next Day {% endblock %}
+{% block title %}{{ posts.title }} | Next Day {% endblock %}
 {% load static %}
 {% block page-header %}
   <header class="intro-header"
@@ -8,9 +8,9 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <div class="post-heading">
-            <h1>{{ article.title }}</h1>
+            <h1>{{ posts.title }}</h1>
             <span class="meta">
-              Posted on {{ article.publish_date }}
+              Posted on {{ posts.publish_date }}
               in {% for tags in tags %}{{ tags.tag }} {% endfor %}
             </span>
           </div>
@@ -26,8 +26,26 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-          {{ article.content | markdown_p }}
+          {{ posts.content | markdown_p }}
         </div>
+          <!-- Reverse direction -->
+          {% if page_obj.has_previous %}
+              <li class="previous">
+                <a href="?page={{ page_obj.previous_page_number }}">
+                  <i class="fa fa-long-arrow-left fa-lg"></i>
+                  Newer  Posts
+                </a>
+              </li>
+          {%  endif %}
+          {% if page_obj.has_next %}
+              <li class="next">
+                <a href="?page={{ page_obj.next_page_number }}">
+                  Older  Posts
+                  <i class="fa fa-long-arrow-right"></i>
+                </a>
+              </li>
+          {% endif %}
+        </ul>
       </div>
     </div>
   </article>

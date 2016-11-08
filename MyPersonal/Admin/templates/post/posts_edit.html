@@ -1,0 +1,146 @@
+{% extends "admin/layout.html" %}
+{% load static %}
+{% block styles %}
+
+    <link href="{% static 'account/css/bootstrap-markdown.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/selectize/selectize.bootstrap3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/selectize/selectize.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row page-title-row">
+        <div class="col-md-12">
+            <h3>Posts <small>» Edit Post</small></h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Post Edit Form</h3>
+                </div>
+                <div class="panel-body">
+
+
+                    {% include 'admin/partials/success.html' %}
+                    <form class="form-horizontal" role="form" id="edit_post">
+                        {% csrf_token %}
+                        {% include 'admin/post/_form_post.html' %}
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <div class="col-md-10 col-md-offset-2">
+                                    <button type="submit" class="btn btn-success btn-lg" >
+                                        <i class="fa fa-floppy-o"></i>
+                                            Save - Finished
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#modal-delete">
+                                        <i class="fa fa-times-circle"></i>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-delete" tabIndex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        ×
+                    </button>
+                    <h4 class="modal-title">Please Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead">
+                        <i class="fa fa-question-circle fa-lg"></i>
+                        Are you sure you want to delete this post?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <form method="POST" action="{% url 'Admin:post_edit' post.id %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">
+                            <i class="fa fa-times-circle"></i> Yes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts%}
+<script src="{% static 'account/js/bootstrap-markdown.js' %}"></script>
+<script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+<script src="{% static 'js/selectize.min.js' %}"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+
+
+<script>
+    $("#content").markdown({autofocus:false,savable:false});
+
+    $(document).on('submit', '#edit_post', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+                csrfmiddlewaretoken: getCookie('csrftoken'),
+                _method: 'PUT',
+                title: $('#title').val(),
+                content: $('#content').val(),
+                tags: $('#tags').val()[0],
+                slug: $('#slug').val()
+            },
+            success:function (json) {
+                if (json.status == 'success'){
+                    location.href=json.url;
+                }
+                else {
+                    toastr.error(json.message);
+                }
+            }
+
+           });
+    });
+
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+     }
+
+   $(function () {
+       $("#tags").selectize({
+            create: true
+        });
+   })
+</script>
+
+
+{% endblock %}

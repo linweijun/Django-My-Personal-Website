@@ -55,11 +55,8 @@ ROOT_URLCONF = 'MyPersonal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),os.path.join(BASE_DIR, 'templates/error'),
-                 os.path.join(BASE_DIR, 'templates/admin/auth'),os.path.join(BASE_DIR, 'templates/admin'),
-                 os.path.join(BASE_DIR, 'templates/admin/tags'),os.path.join(BASE_DIR, 'templates/blog'),
-                 os.path.join(BASE_DIR, 'templates/blog/layouts'),os.path.join(BASE_DIR, 'templates/blog/partials'),
-                 os.path.join(BASE_DIR, 'templates/admin/post'), os.path.join(BASE_DIR,'templates/admin/upload')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/'),os.path.join(BASE_DIR, 'templates/handler_templates'),
+                 os.path.join(BASE_DIR, 'templates/blog')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

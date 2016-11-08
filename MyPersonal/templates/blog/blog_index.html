@@ -1,6 +1,6 @@
 {% extends "blog/layouts/master.html" %}
 {% load static %}
-{% block page-header%}
+{% block page-header %}
     <header class="intro-header"
           style="background-image:url(static/img/home-bg.jpg);">
     <div class="container">
@@ -9,7 +9,6 @@
           <div class="site-heading">
             <h1>Next Day</h1>
             <hr class="small">
-            <h2 class="subheading">{{ subtitle }}</h2>
           </div>
         </div>
       </div>
@@ -22,46 +21,39 @@
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           <!-- 文章列表 -->
-          {% for contacts in contacts %}
+          {% for article in Article_list %}
           <div class="post-preview">
-            <a href="{%url 'show' contacts.slug %}">
-              <h2 class="post-title">{{ contacts.title }}</h2>
-
+            <a href="{%url 'show' article.slug %}">
+              <h2 class="post-title">{{ article.title }}</h2>
                 <h3 class="post-subtitle"></h3>
-
             </a>
             <p class="post-meta">
-              Posted on {{ contacts.publish_date }}
+              Posted on {{ article.publish_date }}
             </p>
               <hr>
           </div>
-
-
-            {% endfor %}
+          {% endfor %}
 
           <ul class="pager">
-
           <!-- Reverse direction -->
-          {% if contacts.has_previous %}
+          {% if page_obj.has_previous %}
               <li class="previous">
-                <a href="?page={{ contacts.previous_page_number }}">
+                <a href="?page={{ page_obj.previous_page_number }}">
                   <i class="fa fa-long-arrow-left fa-lg"></i>
                   Newer  Posts
                 </a>
               </li>
-              {%  endif %}
-          {% if contacts.has_next %}
-
+          {%  endif %}
+          {% if page_obj.has_next %}
               <li class="next">
-                <a href="?page={{ contacts.next_page_number }}">
+                <a href="?page={{ page_obj.next_page_number }}">
                   Older  Posts
                   <i class="fa fa-long-arrow-right"></i>
                 </a>
               </li>
-            {% endif %}
+          {% endif %}
         </ul>
       </div>
-
     </div>
   </div>
 
