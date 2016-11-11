@@ -2,3 +2,4 @@ venv
 /.idea
 *.py[cd]
 .idea
+/MyPersonal/settings.py
