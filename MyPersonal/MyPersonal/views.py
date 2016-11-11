@@ -3,11 +3,10 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from Admin.models import Tags,Posts
-from django.core.mail import send_mail, BadHeaderError
 from django.contrib import messages
-from django.conf import settings
-from django.views.generic import ListView, DetailView
-from django.views.generic.list import MultipleObjectMixin
+from django.views.generic import ListView, DetailView, FormView, TemplateView
+from .forms import ContactForm
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 def page_not_found_view(request):
@@ -33,6 +32,7 @@ def error_view(request):
 
 
 class IndexView(ListView):
+
     template_name = 'blog/blog_index.html'
     context_object_name = 'Article_list'
     paginate_by = 4
@@ -43,6 +43,7 @@ class IndexView(ListView):
 
 
 class ShowPostsViews(DetailView):
+
     model = Posts
     template_name = 'blog/blog_post.html'
     context_object_name = 'posts'
@@ -53,10 +54,17 @@ class ShowPostsViews(DetailView):
         return super(ShowPostsViews, self).get_context_data(**kwargs)
 
 
-def contact(request):
-    if request.method == 'POST':
-        send_email(request)
-    return render(request, 'contact.html')
+class ContactViews(SuccessMessageMixin, FormView):
+
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = '/contact/'
+    success_message = 'Thinks your!'
+
+    def form_valid(self, form):
+        form.send_email()
+        return super(ContactViews, self).form_valid(form)
+
 
 def about_me(request):
     return render(request,'about_me.html')
@@ -64,23 +72,3 @@ def about_me(request):
 
 def about_the_web(request):
     return HttpResponse('test')
-
-
-
-def send_email(request):
-    message = request.POST['message']
-    emails = request.POST['email']
-    name = request.POST['name']
-    message_html = ("<h1>THis is Contact email <br> <p> name:%s <br> email: %s <br> <p> <hr>%s")%(name, emails, message)
-
-    if messages and emails and name:
-        try:
-            send_mail('from:Next Day messags', message_html, settings.EMAIL_HOST_USER, ['linweijun93315@gmail.com'], html_message=message_html)
-        except BadHeaderError:
-            return HttpResponse('Invalid header found.')
-        messages.success(request, "Thinks your")
-        return render(request, 'contact.html')
-    else:
-        messages.warning(request, 'Make sure all fields are entered and valid.')
-        return render(request, 'contact.html')
-

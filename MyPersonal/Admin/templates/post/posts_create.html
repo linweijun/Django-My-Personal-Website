@@ -1,4 +1,4 @@
-{% extends "admin/layout.html" %}
+{% extends "admin/../layout.html" %}
 {% load static %}
 {% block styles %}
 
@@ -25,7 +25,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" id="create_post">
                         {% csrf_token %}
-                        {% include 'admin/post/_form_post.html' %}
+                        {% include 'admin//_form_post.html' %}
 
                      <div class="col-md-8">
                          <div class="form-group">

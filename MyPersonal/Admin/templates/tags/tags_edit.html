@@ -1,4 +1,4 @@
-{% extends "admin/layout.html" %}
+{% extends "admin/../layout.html" %}
 
 {% block content %}
  <div class="container-fluid">
@@ -15,7 +15,7 @@
                         <h3 class="panel-title">Tag Edit Form</h3>
                     </div>
                     <div class="panel-body">
-                        {% include 'admin/partials/success.html' %}
+                        {% include 'admin/../partials/success.html' %}
 
                         <form class="form-horizontal" role="form" method="POST" action="{% url 'Admin:edit_tag' data.id %}">
                             {% csrf_token %}

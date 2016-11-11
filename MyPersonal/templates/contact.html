@@ -25,31 +25,29 @@
  <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        {% include 'admin/partials/success.html' %}
-        {% include 'admin/partials/error.html' %}
+        {% include 'partials/success.html' %}
         <p>
           Want to get in touch with me? Fill out the form below to send me a
           message and I will try to get back to you within 24 hours!
         </p>
         <form  method="post">
-                                    {% csrf_token %}
-
+            {% csrf_token %}
             <div class="row control-group">
                 <div class="form-group col-xs-12">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name">
+                    <input type="text" class="form-control" id="name" name="name" required="required">
                 </div>
             </div>
             <div class="row control-group">
                 <div class="form-group col-xs-12">
                     <label for="email">Email Address</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" name="email" required="required">
                 </div>
           </div>
           <div class="row control-group">
                 <div class="form-group col-xs-12 controls">
                     <label for="message">Message</label>
-                    <textarea rows="5" class="form-control" id="message" name="message" ></textarea>
+                    <textarea rows="5" class="form-control" id="message" name="message" required="required"></textarea>
                 </div>
           </div>
           <br>
