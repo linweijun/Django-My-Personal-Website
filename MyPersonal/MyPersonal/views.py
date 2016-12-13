@@ -69,6 +69,3 @@ class ContactViews(SuccessMessageMixin, FormView):
 def about_me(request):
     return render(request,'about_me.html')
 
-
-def about_the_web(request):
-    return HttpResponse('test')

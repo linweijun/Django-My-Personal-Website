@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
+import json
+import time
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, logout,login
 from django.contrib.auth.views import login
 from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 import time
@@ -11,14 +13,16 @@ from django.contrib import messages
 from django.core.exceptions import  ObjectDoesNotExist
 from .models import Tags, Posts
 from django.db import IntegrityError
+from django.views.generic import RedirectView
 
 # Create your views here.
 
+class LogoutViews(RedirectView):
+    url = '/'
 
-def logout_views(request):
-    logout(request)
-    return HttpResponseRedirect('/')
-
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return super(LogoutViews, self).get(request, *args, **kwargs)
 
 def login_views(request):
     if request.user.is_authenticated():

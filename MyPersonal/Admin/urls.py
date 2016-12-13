@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls import url
-from .views import edit_tags, login_views, post_edit, logout_views, \
+from .views import edit_tags, login_views, post_edit, LogoutViews, \
     upload_index, register, post_index, post_create, tag_index, create_tags
 from django.contrib.auth import views as auth_views
 app_name = 'Admin'
@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^$', login_views, name='login'),
     url(r'^login/$',login_views, name='login'),
     url(r'^password_rest/$', auth_views.password_reset),
-    url(r'^logout/$',logout_views, name='logout'),
+    url(r'^logout/$',LogoutViews.as_view(), name='logout'),
     url(r'^register/$', register, name='register'),
     url(r'^posts$',post_index, name='posts'),
     url(r'^posts/([\d]+)/edit/$',post_edit, name="post_edit"),
