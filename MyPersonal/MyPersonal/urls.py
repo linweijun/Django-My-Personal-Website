@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import IndexView, ShowPostsViews, ContactViews
+from django.contrib.auth import views
 
 
 
@@ -26,6 +27,11 @@ urlpatterns = [
     url(r'^posts/(?P<slug>\w+)$', ShowPostsViews.as_view(), name='show'),
     url(r'^admin/', include('Admin.urls')),
     url(r'^uploads/',include('upload.urls')),
+    url(r'^password_reset/$', views.password_reset, name='password_reset'),
+    url(r'^password_reset/done/$', views.password_reset_done, name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.password_reset_confirm, name='password_reset_confirm'),
+    url(r'^reset/done/$', views.password_reset_complete, name='password_reset_complete'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'MyPersonal.views.page_not_found_view'

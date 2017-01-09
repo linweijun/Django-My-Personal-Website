@@ -7,7 +7,6 @@ app_name = 'Admin'
 urlpatterns = [
     url(r'^$', login_views, name='login'),
     url(r'^login/$',login_views, name='login'),
-    url(r'^password_rest/$', auth_views.password_reset),
     url(r'^logout/$',LogoutViews.as_view(), name='logout'),
     url(r'^register/$', register, name='register'),
     url(r'^posts$',post_index, name='posts'),
