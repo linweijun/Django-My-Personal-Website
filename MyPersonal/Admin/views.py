@@ -16,6 +16,7 @@ from .models import Tags, Posts
 from django.db import IntegrityError
 from django.views.generic import RedirectView
 from django.db import connection
+import django.utils.timezone as timezone
 
 # Create your views here.
 
@@ -34,7 +35,9 @@ def about_edit(request):
             Introduction = request.POST['Introduction']
             try:
                 if about_id:
-                    cursor.execute("UPDATE About_about SET Introduction = %s WHERE id=%s", [Introduction, about_id])
+                    cursor.execute("UPDATE About_about SET Introduction = %s, \
+                                   Edit_time = %s WHERE id=%s", \
+                                   [Introduction, timezone.now().isoformat(' '),about_id])
                     messages.success(request, "更新完成")
                 else:
                     About.objects.create(Introduction=Introduction)
