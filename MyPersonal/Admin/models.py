@@ -17,17 +17,16 @@ class Tags(models.Model):
 
 @python_2_unicode_compatible
 class Posts(models.Model):
-    title = models.CharField(max_length=254, unique=True,verbose_name='标题')
+    title = models.CharField('标题',max_length=254, unique=True)
     image = models.FileField(null=True,blank=True)
-    content = models.TextField(verbose_name='正文')
+    content = models.TextField('正文')
     author = models.ForeignKey(User)
     tags = models.ManyToManyField(Tags)
-    publish_date = models.DateTimeField(verbose_name='发布时间')
-    readcount = models.IntegerField(blank=True, verbose_name='阅读数')
+    publish_date = models.DateTimeField('发布时间')
+    readcount = models.IntegerField('阅读数',blank=True )
     slug = models.SlugField(unique=True)
 
 
 
     def __str__(self):
         return self.title
-
