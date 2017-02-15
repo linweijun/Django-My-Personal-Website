@@ -15,20 +15,42 @@ from django.core.exceptions import  ObjectDoesNotExist
 from .models import Tags, Posts
 from django.db import IntegrityError
 from django.views.generic import RedirectView
+from django.db import connection
 
 # Create your views here.
 
 @login_required
 def about_edit(request):
-    if request.method == 'POST':
-        Introduction = request.POST['Introduction']
-        try:
-            About.objects.create(Introduction = Introduction)
-            messages.success(request, '更新成功')
-        except:
-            return JsonResponse({'status':'error', \
-                            'message':"可能错了。要不你上服务器排查一下吧。^_—"})
-    return render(request, 'edit_about.html')
+    try:
+        #使用原始SQL语句获取
+        cursor = connection.cursor()
+        cursor.execute("SELECT id  FROM About_about ")
+        about_id = cursor.fetchall()
+        if about_id:
+            cursor.execute("SELECT Introduction FROM About_about WHERE id=%s", [about_id])
+            about_info = cursor.fetchall()[0]
+
+        if request.method == 'POST':
+            Introduction = request.POST['Introduction']
+            try:
+                if about_id:
+                    cursor.execute("UPDATE About_about SET Introduction = %s WHERE id=%s", [Introduction, about_id])
+                    messages.success(request, "更新完成")
+                else:
+                    About.objects.create(Introduction=Introduction)
+                    messages.success(request,"创建完成")
+                return JsonResponse(request, {'status':'success'})
+            except:
+                return JsonResponse(request, {'status':'error','message':"出错啦"})
+
+    #return HttpResponse(about_info)
+        else:
+            return render(request, 'edit_about.html', {'about_info':about_info[0]})
+    except:
+        return render(request, 'edit_about.html')
+        #return HttpResponse("error")
+
+
 
 
 
