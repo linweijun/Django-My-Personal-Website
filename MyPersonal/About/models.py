@@ -5,10 +5,6 @@ from django.db import models
 # Create your models here.
 
 class About(models.Model):
-    Name = models.CharField(max_length=60)
-    Introduction = models.CharField(max_length=255)
-    Gender = models.BooleanField(default=1)
-    Desired_position = models.CharField(max_length=128)
-    Skills_list = models.TextField()
+    Introduction = models.TextField()
     Create_time = models.DateTimeField(auto_now_add=True)
     Edit_time = models.DateTimeField(auto_now=True)

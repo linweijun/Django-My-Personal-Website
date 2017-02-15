@@ -1,0 +1,38 @@
+{% extends "blog/layouts/master.html" %}
+{% block title %} About | Next Day {% endblock %}
+
+{% load static %}
+{% block page-header %}
+<header class="intro-header"
+      style="background-image:url(/static/img/about-bg.jpg);">
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="site-heading">
+        <h1>About Me</h1>
+        <hr class="small">
+        <h2 class="subheading">
+          Everything about me.
+        </h2>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+{% endblock %}
+
+{% block content %}
+{% load makrdown_filter %}
+
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        {{ about.Introduction | markdown_p }}
+      </div>
+
+    </div>
+    <p class="text-muted">创建于{{ about.Create_time}},最后编辑{{ about.Edit_time }}</p>
+  </div>
+</article>
+{% endblock %}

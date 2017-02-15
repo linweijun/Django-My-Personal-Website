@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block styles %}
+
+    <link href="{% static 'css/bootstrap-markdown.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/selectize/selectize.bootstrap3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/selectize/selectize.css' %}" rel="stylesheet">
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row page-title-row">
+        <div class="col-md-12">
+            <h3>About <small>» Edit About</small></h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">About Edit Form</h3>
+                </div>
+                <div class="panel-body">
+                    {% include 'partials/success.html' %}
+                    {% include 'partials/error.html' %}
+                    <form class="form-horizontal" role="form" id="edit_about" >
+                        {% csrf_token %}
+                        {% include 'form_about.html' %}
+                        <div class="col-md-8">
+                            <div class="form-group">
+                               <div class="col-md-10 col-md-offset-2">
+                                   <button type="submit" class="btn btn-primary btn-lg">
+                                       <i class="fa fa-disk-o"></i>
+                                       Save
+                                   </button>
+                               </div>
+                            </div>
+                        </div>
+                       </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts%}
+<script src="{% static 'js/bootstrap-markdown.js' %}"></script>
+<script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js"></script>
+<script src="{% static 'js/toastr.min.js' %}"></script>
+<script src="{% static 'js/selectize.min.js' %}"></script>
+
+
+<script>
+    $("#content").markdown({autofocus:true,savable:true});
+
+    $(document).on('submit', '#edit_about', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '',
+            data: {
+                csrfmiddlewaretoken: getCookie('csrftoken'),
+                Introduction:$('#Introduction').val()
+            },
+            success:function(json){
+              if(json.status == 'error'){
+                toastr.error(json.message);
+              }else {
+                window.location.reload()
+
+              }
+            }
+           })
+    });
+
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+     }
+</script>
+
+
+{% endblock %}

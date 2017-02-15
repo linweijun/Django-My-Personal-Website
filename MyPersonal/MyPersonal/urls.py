@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^contact/',ContactViews.as_view(), name='contact'),
     url(r'^posts/(?P<slug>\w+)$', ShowPostsViews.as_view(), name='show'),
     url(r'^admin/', include('Admin.urls')),
+    url(r'^about/', include('About.urls')),
     url(r'^uploads/',include('upload.urls')),
     url(r'^password_reset/$', views.password_reset, name='password_reset'),
     url(r'^password_reset/done/$', views.password_reset_done, name='password_reset_done'),
@@ -37,5 +38,3 @@ urlpatterns = [
 handler404 = 'MyPersonal.views.page_not_found_view'
 handler403 = 'MyPersonal.views.permission_denied_view'
 handler500 = 'MyPersonal.views.error_view'
-
-

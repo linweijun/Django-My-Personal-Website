@@ -1,16 +1,12 @@
-                    <input name="title" class="form-control" id="title" type="text" value="{{ post.title }}" placeholder="Title?" required="required"/>
-                <hr />
-                    <textarea name="content" id="content" data-provide="markdown" rows="10">{{ post.content}}</textarea>
-                <hr />
-                    <select name="tags" id="tags" class="form-control" multiple>
-                         {% for tags in tags%}
-                        <option name="tags" value="{{ tags.tag }}">{{ tags.tag }}</option>
-                        {% endfor %}
-                    </select>
-                <hr />
-                    <input id="slug" class="form-control" value="{{ post.slug }}" placeholder="slug" required="required">
-                <hr/>
-
-
-
-
+<input name="title" class="form-control" id="title" type="text" value="{{ post.title }}" placeholder="Title?" required="required"/>
+<hr />
+<textarea name="content" id="content" data-provide="markdown" rows="10">{{ post.content}}</textarea>
+<hr />
+<select name="tags" id="tags" class="form-control" multiple>
+    {% for tags in tags%}
+<option name="tags" value="{{ tags.tag }}">{{ tags.tag }}</option>
+    {% endfor %}
+</select>
+<hr />
+<input id="slug" class="form-control" value="{{ post.slug }}" placeholder="slug" required="required">
+<hr/>

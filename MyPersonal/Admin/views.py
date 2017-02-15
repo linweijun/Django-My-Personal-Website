@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 import time
+from About.models import About
 from django.contrib import messages
 from django.core.exceptions import  ObjectDoesNotExist
 from .models import Tags, Posts
@@ -16,6 +17,20 @@ from django.db import IntegrityError
 from django.views.generic import RedirectView
 
 # Create your views here.
+
+@login_required
+def about_edit(request):
+    if request.method == 'POST':
+        Introduction = request.POST['Introduction']
+        try:
+            About.objects.create(Introduction = Introduction)
+            messages.success(request, '更新成功')
+        except:
+            return JsonResponse({'status':'error', \
+                            'message':"可能错了。要不你上服务器排查一下吧。^_—"})
+    return render(request, 'edit_about.html')
+
+
 
 class LogoutViews(RedirectView):
     url = '/'
@@ -65,7 +80,7 @@ def register(request):
                         messages.success(request, "注册成功，请登陆！")
                         return JsonResponse({'status': 'success', 'url': '/admin/login/'})
                     except:
-                        pass
+                        messages.error(request,"错了，不是你的问题，是我，是我。排查中…………………………")
             else:
                 return JsonResponse({'status': 'error', 'message': "两次密码不一致"})
         admin_status = User.objects.all()
@@ -239,5 +254,3 @@ def upload_index(request):
 @login_required
 def upload_files(request):
     files = request
-
-

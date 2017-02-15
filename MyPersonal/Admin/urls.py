@@ -1,7 +1,8 @@
 # -*- coding:utf-8 -*-
 from django.conf.urls import url
 from .views import edit_tags, login_views, post_edit, LogoutViews, \
-    upload_index, register, post_index, post_create, tag_index, create_tags
+    upload_index, register, post_index, post_create, tag_index, create_tags,\
+    about_edit
 from django.contrib.auth import views as auth_views
 app_name = 'Admin'
 urlpatterns = [
@@ -15,5 +16,6 @@ urlpatterns = [
     url(r'^tags/$', tag_index, name='tags'),
     url(r'^create_tags',create_tags,name='create_tags'),
     url(r'^tags/([\d]+)/edit/',edit_tags, name='edit_tag'),
+    url(r'^about/edit/', about_edit, name='about_edit'),
     url(r'^upload/$', upload_index, name='upload'),
 ]
