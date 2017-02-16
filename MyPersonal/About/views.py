@@ -28,6 +28,6 @@ def about(request):
         about_info = "未修改，初始化状态…………"
         about_edit = "0000-00-00"
         about_create = "0000-00-00"
-        return render(request, 'about.html'{'about_info': about_info, \
+        return render(request, 'about.html',{'about_info': about_info, \
                                           'about_edit':about_edit, \
                                           'about_create':about_create})

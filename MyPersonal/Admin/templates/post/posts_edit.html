@@ -2,7 +2,7 @@
 {% load static %}
 {% block styles %}
 
-    <link href="{% static 'account/css/bootstrap-markdown.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-markdown.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/selectize/selectize.bootstrap3.css' %}" rel="stylesheet">
     <link href="{% static 'css/selectize/selectize.css' %}" rel="stylesheet">
 
@@ -83,7 +83,7 @@
 {% endblock %}
 
 {% block scripts%}
-<script src="{% static 'account/js/bootstrap-markdown.js' %}"></script>
+<script src="{% static 'js/bootstrap-markdown.js' %}"></script>
 <script src="//rawgit.com/jeresig/jquery.hotkeys/master/jquery.hotkeys.js"></script>
 <script src="{% static 'js/toastr.min.js' %}"></script>
 <script src="{% static 'js/selectize.min.js' %}"></script>
@@ -100,7 +100,7 @@
             url: '',
             data: {
                 csrfmiddlewaretoken: getCookie('csrftoken'),
-                _method: 'PUT'
+                _method: 'PUT',
                 title: $('#title').val(),
                 content: $('#content').val(),
                 tags: $('#tags').val()[0],

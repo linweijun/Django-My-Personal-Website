@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'Admin',
     'MyPersonal',
     'upload',
+    'About'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,8 +56,17 @@ ROOT_URLCONF = 'MyPersonal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates/'),os.path.join(BASE_DIR, 'templates/handler_templates'),
-                 os.path.join(BASE_DIR, 'templates/blog')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates/'),
+                 os.path.join(BASE_DIR, 'templates/handler_templates'),
+                 os.path.join(BASE_DIR, 'templates/blog'),
+                 os.path.join(BASE_DIR, 'Admin/templates/auth'),
+                 os.path.join(BASE_DIR, 'Admin/templates/partials'),
+                 os.path.join(BASE_DIR, 'Admin/templates/post'),
+                 os.path.join(BASE_DIR, 'Admin/templates/tags'),
+                 os.path.join(BASE_DIR, 'Admin/templates/upload'),
+                 os.path.join(BASE_DIR, 'Admin/templates'),
+                 os.path.join(BASE_DIR, 'Admin/templates/About')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,8 +145,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 #Password storage system
 PASSWORD_HASHERS = [
