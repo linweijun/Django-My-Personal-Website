@@ -28,11 +28,11 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        {{ about.Introduction | markdown_p }}
+        {{ about_info | markdown_p }}
       </div>
 
     </div>
-    <p class="text-muted">创建于{{ about.Create_time}},最后编辑{{ about.Edit_time }}</p>
+    <p class="text-info">创建于{{ about_create}},最后编辑{{ about_edit }}</p>
   </div>
 </article>
 {% endblock %}
