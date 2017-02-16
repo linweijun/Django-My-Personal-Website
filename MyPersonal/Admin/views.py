@@ -45,16 +45,10 @@ def about_edit(request):
                 return JsonResponse(request, {'status':'success'})
             except:
                 return JsonResponse(request, {'status':'error','message':"出错啦"})
-
-    #return HttpResponse(about_info)
         else:
             return render(request, 'edit_about.html', {'about_info':about_info[0]})
     except:
         return render(request, 'edit_about.html')
-        #return HttpResponse("error")
-
-
-
 
 
 class LogoutViews(RedirectView):
